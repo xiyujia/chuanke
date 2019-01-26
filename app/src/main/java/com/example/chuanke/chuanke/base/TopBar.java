@@ -60,7 +60,7 @@ public class TopBar extends LinearLayout {
             for (int i = 0; i < n; i++) {
                 int attr = a.getIndex(i);
                 if (attr == R.styleable.TopBar_Text) {
-                    setText(tv_title, a.getString(attr));
+                    setText(a.getString(attr));
                 } else if (attr == R.styleable.TopBar_backVisibility) {
                     setVisibility(iv_back, a.getInt(attr, 0));
                 } else if (attr == R.styleable.TopBar_titleVisibility) {
@@ -82,8 +82,8 @@ public class TopBar extends LinearLayout {
         }
 
 
-    private void setText(TextView tv, CharSequence text) {
-        tv.setText(text);
+    public void setText(CharSequence text) {
+        tv_title.setText(text);
     }
 
     private void setVisibility(View view, int visibility) {
@@ -99,4 +99,6 @@ public class TopBar extends LinearLayout {
                 break;
         }
     }
+
+
 }

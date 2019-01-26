@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.chuanke.chuanke.activity.LoginActivity;
+import com.example.chuanke.chuanke.activity.RegActivity;
 import com.example.chuanke.chuanke.base.BaseActivity;
 import com.example.chuanke.chuanke.base.TopBar;
 
@@ -24,7 +25,8 @@ import butterknife.BindView;
 public class MainActivity extends BaseActivity {
     @BindView(R.id.login)
     Button login;
-
+    @BindView(R.id.reg)
+    Button reg;
     @Override
     public int getLayoutFile() {
         return R.layout.activity_main;
@@ -38,6 +40,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initEvent() {
         login.setOnClickListener(this);
+        reg.setOnClickListener(this);
     }
 
     @Override
@@ -55,6 +58,9 @@ public class MainActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.login:
                 startActivity(LoginActivity.class);
+                break;
+            case R.id.reg:
+                startActivity(RegActivity.class);
                 break;
             }
     }

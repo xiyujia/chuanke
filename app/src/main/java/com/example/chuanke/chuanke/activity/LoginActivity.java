@@ -59,7 +59,7 @@ public class LoginActivity extends BaseActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!et_user.getText().toString().equals("")){
                     iv_user.setImageResource(R.drawable.user_input);
-                    if(!et_user.getText().toString().equals("")&&!et_key.getText().toString().equals("")){
+                    if(!et_key.getText().toString().equals("")){
                         iv_user.setImageResource(R.drawable.user_input);
                         iv_key.setImageResource(R.drawable.key_input);
                         btn_login.setTextColor(Color.parseColor("#059DD8"));
@@ -88,7 +88,7 @@ public class LoginActivity extends BaseActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!et_key.getText().toString().equals("")){
                     iv_key.setImageResource(R.drawable.key_input);
-                    if(!et_user.getText().toString().equals("")&&!et_key.getText().toString().equals("")){
+                    if(!et_user.getText().toString().equals("")){
                         iv_user.setImageResource(R.drawable.user_input);
                         iv_key.setImageResource(R.drawable.key_input);
                         btn_login.setTextColor(Color.parseColor("#059DD8"));
