@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- 边框 -->
+
+    <item>
+
+        <shape >
+
+            <!-- 通过pading指定边线有无和宽度 -->
+
+            <padding
+
+                android:top="1dp"
+                android:left="1dp"
+                android:bottom="1dp"
+                android:right="1dp"
+
+
+                />
+
+            <solid
+                android:color="#7E7E7E"
+
+                />
+
+            <!--<corners android:bottomRightRadius="3dp"-->
+                <!--android:bottomLeftRadius="3dp"-->
+                <!--android:topLeftRadius="3dp"-->
+                <!--android:topRightRadius="3dp" />-->
+
+        </shape>
+
+    </item>
+
+
+
+    <!-- 主体 -->
+
+    <item>
+
+        <shape >
+            <!--<corners android:bottomRightRadius="5dp"-->
+                <!--android:bottomLeftRadius="5dp"-->
+                <!--android:topLeftRadius="5dp"-->
+                <!--android:topRightRadius="5dp" />-->
+
+            <solid
+
+                android:color="@color/background"
+
+
+                />
+
+        </shape>
+
+    </item>
+
+
+
+</layer-list>
