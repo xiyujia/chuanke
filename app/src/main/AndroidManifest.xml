@@ -20,7 +20,8 @@
         <activity android:name=".activity.RegActivity" />
         <activity android:name=".activity.ForgetActivity" />
         <activity android:name=".activity.MineActivity" />
-        <activity android:name=".activity.PersonalActivity"></activity>
+        <activity android:name=".activity.PersonalActivity" />
+        <activity android:name=".activity.HomeActivity"></activity>
     </application>
 
 </manifest>

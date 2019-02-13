@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.chuanke.chuanke.activity.ForgetActivity;
+import com.example.chuanke.chuanke.activity.HomeActivity;
 import com.example.chuanke.chuanke.activity.LoginActivity;
 import com.example.chuanke.chuanke.activity.PersonalActivity;
 import com.example.chuanke.chuanke.activity.RegActivity;
@@ -33,6 +34,8 @@ public class MainActivity extends BaseActivity {
     Button forget;
     @BindView(R.id.personal)
     Button personal;
+    @BindView(R.id.home)
+    Button home;
     @Override
     public int getLayoutFile() {
         return R.layout.activity_main;
@@ -49,6 +52,7 @@ public class MainActivity extends BaseActivity {
         reg.setOnClickListener(this);
         forget.setOnClickListener(this);
         personal.setOnClickListener(this);
+        home.setOnClickListener(this);
     }
 
     @Override
@@ -75,6 +79,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.personal:
                 startActivity(PersonalActivity.class);
+                break;
+            case R.id.home:
+                startActivity(HomeActivity.class);
                 break;
             }
     }

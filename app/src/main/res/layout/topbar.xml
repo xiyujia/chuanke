@@ -10,7 +10,7 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:src="@drawable/back_topbar"
-        android:padding="15dp"
+        android:padding="10dp"
         />
 
     <TextView
@@ -21,6 +21,7 @@
         android:layout_alignParentTop="true"
         android:gravity="center"
         android:textColor="#059DD8"
+        android:textSize="18sp"
         android:layout_alignParentLeft="true" />
 
     <View
