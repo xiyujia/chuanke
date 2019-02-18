@@ -13,6 +13,10 @@ import android.widget.TextView;
 
 import com.example.chuanke.chuanke.R;
 import com.example.chuanke.chuanke.base.BaseActivity;
+import com.example.chuanke.chuanke.base.BaseListener;
+import com.example.chuanke.chuanke.bean.LoginBean;
+import com.example.chuanke.chuanke.model.LoginModel;
+import com.example.chuanke.chuanke.util.Phone;
 
 import butterknife.BindView;
 
@@ -121,6 +125,28 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
+        final String mobile = et_user.getText().toString();
+        final String password = et_key.getText().toString();
+        switch (v.getId()) {
+            case R.id.btn_login_login:
+                if (mobile.isEmpty()) {
+                    showToast("请输入账号！");
+                } else if (password.isEmpty()) {
+                    showToast("请输入密码！");
+                } else if (password.length() < 6) {
+                    showToast("密码长度不能少于6位！");
+                }
+                new LoginModel().login(mobile,password, new BaseListener<LoginBean>() {
+                    @Override
+                    public void onResponse(LoginBean loginBean) {
 
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+
+                    }
+                });
+        }
     }
 }
