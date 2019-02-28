@@ -5,4 +5,7 @@ public class URL {
 
     //登录
     public static final String login = "api/User/login";
+
+    //注册
+    public static final String reg="api/User/register";
 }

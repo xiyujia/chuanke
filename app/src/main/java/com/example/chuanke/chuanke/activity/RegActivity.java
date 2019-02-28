@@ -13,6 +13,10 @@ import android.widget.TextView;
 
 import com.example.chuanke.chuanke.R;
 import com.example.chuanke.chuanke.base.BaseActivity;
+import com.example.chuanke.chuanke.base.BaseListener;
+import com.example.chuanke.chuanke.bean.RegBean;
+import com.example.chuanke.chuanke.model.RegModel;
+import com.example.chuanke.chuanke.util.Phone;
 
 import butterknife.BindView;
 
@@ -185,7 +189,33 @@ public class RegActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
+        String name=et_user.getText().toString();
+        String pwd=et_key.getText().toString();
+        String pwd1=et_key1.getText().toString();
+        String phone=et_phone.getText().toString();
+        switch (v.getId()){
+            case R.id.btn_reg_reg:
+                if (name.isEmpty()&&pwd.isEmpty()&&pwd1.isEmpty()&&phone.isEmpty()){
+                    showToast("请填写完整的信息");
+                }else if(!Phone.isMobile(phone)){
+                    showToast("请填写正确的手机号码");
+                }else if(!(pwd.equals(pwd1))){
+                    showToast("两次输入密码不一致");
+                }else {
+                    new RegModel().reg(name, phone, pwd, new BaseListener<RegBean>() {
+                        @Override
+                        public void onResponse(RegBean regBean) {
+                            showToast(regBean.getMsg());
+                        }
 
+                        @Override
+                        public void onFail(String msg) {
+
+                        }
+                    });
+                }
+                break;
+        }
     }
     private void setInput(){
         iv_user.setImageResource(R.drawable.user_input);
