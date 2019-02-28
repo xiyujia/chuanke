@@ -8,7 +8,7 @@ public class LoginBean {
     private String uemail;
     private String uphone;
     private String ustate;
-    private Date uzctime;
+    private String uzctime;
     public void setUid(int uid) {
         this.uid = uid;
     }
@@ -44,11 +44,10 @@ public class LoginBean {
         return ustate;
     }
 
-    public void setUzctime(Date uzctime) {
+    public void setUzctime(String uzctime) {
         this.uzctime = uzctime;
     }
-    public Date getUzctime() {
+    public String getUzctime() {
         return uzctime;
     }
-
 }

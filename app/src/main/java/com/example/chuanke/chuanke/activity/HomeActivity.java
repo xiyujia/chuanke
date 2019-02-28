@@ -57,8 +57,8 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void initData() {
         fragmentList=new ArrayList<Fragment>();
-        fragmentList.add(new FileFragment());
         fragmentList.add(new HomeFragment());
+        fragmentList.add(new FileFragment());
         fragmentList.add(new MineFragment());
         adapter=new FragmentAdapter(getSupportFragmentManager(),fragmentList);
         viewPager.setAdapter(adapter);

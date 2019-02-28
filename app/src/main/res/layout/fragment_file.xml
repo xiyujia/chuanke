@@ -1,46 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-    <com.youth.banner.Banner
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/banner"
-        android:layout_width="match_parent"
-        android:layout_height="160dp" />
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/rv_file_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+</android.support.v7.widget.RecyclerView>
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:id="@+id/floatbutton"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/new_file"
+        app:backgroundTint="#009FD9"
+        app:elevation="5dp"
+        app:pressedTranslationZ="12dp"
+        app:fabSize="normal"
+        app:borderWidth="0dp"
+        app:rippleColor="#cccccc" />
 
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="160dp"-->
-        <!--android:clipChildren="false"-->
-        <!--&gt;-->
-        <!--<android.support.v4.view.ViewPager-->
-            <!--android:id="@+id/viewpager"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="160dp"-->
-            <!--android:layout_marginLeft="25dp"-->
-            <!--android:layout_marginRight="25dp"-->
-            <!--android:clipChildren="false"></android.support.v4.view.ViewPager>-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:orientation="vertical"-->
-            <!--android:gravity="center"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:background="#66000000">-->
-            <!--<LinearLayout-->
-                <!--android:id="@+id/ll_point_containe"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:orientation="vertical">-->
-
-            <!--</LinearLayout>-->
-        <!--</LinearLayout>-->
-    <!--</RelativeLayout>-->
-
-</LinearLayout>
+</FrameLayout>

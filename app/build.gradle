@@ -45,5 +45,5 @@ dependencies {
 
     //图片加载框架
     implementation 'com.facebook.fresco:fresco:1.10.0'
-
+    implementation 'com.android.support:gridlayout-v7:22.+'
 }

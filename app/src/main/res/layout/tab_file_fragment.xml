@@ -16,7 +16,7 @@
         android:layout_weight="1"
         android:paddingBottom="2dp"
         android:gravity="center_horizontal"
-        android:text="文章"
+        android:text="首页"
         android:textColor="@drawable/tab_text"
         android:textSize="12sp"
         android:textStyle="bold" />

@@ -128,6 +128,12 @@ public class LoginActivity extends BaseActivity {
         final String mobile = et_user.getText().toString();
         final String password = et_key.getText().toString();
         switch (v.getId()) {
+            case R.id.tv_login_reg:
+                startActivity(RegActivity.class);
+                break;
+            case R.id.tv_login_Reset:
+                startActivity(ForgetActivity.class);
+                break;
             case R.id.btn_login_login:
                 if (mobile.isEmpty()) {
                     showToast("请输入账号！");
@@ -135,18 +141,28 @@ public class LoginActivity extends BaseActivity {
                     showToast("请输入密码！");
                 } else if (password.length() < 6) {
                     showToast("密码长度不能少于6位！");
+                }else {
+                    new LoginModel().login(mobile,password, new BaseListener<LoginBean>() {
+                        @Override
+                        public void onResponse(LoginBean loginBean) {
+                            if (loginBean.getUname()!=null){
+                                startActivity(HomeActivity.class);
+                                finish();
+                            }else {
+                                showToast("账号或密码错误");
+                            }
+
+                        }
+
+                        @Override
+                        public void onFail(String msg) {
+
+                        }
+                    });
+                    break;
+
                 }
-                new LoginModel().login(mobile,password, new BaseListener<LoginBean>() {
-                    @Override
-                    public void onResponse(LoginBean loginBean) {
 
-                    }
-
-                    @Override
-                    public void onFail(String msg) {
-
-                    }
-                });
         }
     }
 }

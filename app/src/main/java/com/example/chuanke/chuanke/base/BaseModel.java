@@ -29,13 +29,7 @@ public class BaseModel<T> {
     public Call<T> call;
 
     public BaseModel() {
-        int DEFAULT_TIMEOUT = 10;
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                .build();
-        retrofit = new Retrofit.Builder().baseUrl(URL.BASE_URL).client(client).addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl(URL.BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(Service.class);
     }
 
