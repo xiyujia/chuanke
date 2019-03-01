@@ -7,7 +7,11 @@
     <!-- if you want to load images from a file OR from the internet -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" /> <!-- 震动权限 -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 摄像头权限 -->
+    <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- 自动聚焦权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
         android:name=".base.MyApplication"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -31,6 +35,12 @@
         <activity android:name=".activity.ForgetActivity" />
         <activity android:name=".activity.PersonalActivity" />
         <activity android:name=".activity.HomeActivity" />
+        <activity android:name=".zxing.activity.CaptureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity android:name=".zxing.activity.ResultActivity"
+            android:screenOrientation="portrait"
+             />
     </application>
 
 </manifest>

@@ -1,14 +1,20 @@
 package com.example.chuanke.chuanke.fragment;
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 
 import com.example.chuanke.chuanke.R;
 import com.example.chuanke.chuanke.base.BaseFragment;
 import com.example.chuanke.chuanke.util.GlideImageLoader;
+import com.example.chuanke.chuanke.zxing.activity.CaptureActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -23,6 +29,7 @@ public class HomeFragment extends BaseFragment {
     private List<Map<String, Object>> dataList;
     private SimpleAdapter adapter;
     private ArrayList< String > images =  new  ArrayList <>();
+    ImageView iv_scan;
     @Override
     public int getLayoutFile() {
         return R.layout.fragment_home;
@@ -39,6 +46,7 @@ public class HomeFragment extends BaseFragment {
     public void initView() {
         Banner banner = (Banner) findViewById(R.id.banner);
         gridView = (GridView) findViewById(R.id.gridview);
+        iv_scan=findViewById(R.id.iv_fg_home_scan);
         banner.setImageLoader(new GlideImageLoader());
         banner.setImages(images);
         banner.setIndicatorGravity(BannerConfig.CENTER);
@@ -51,7 +59,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initEvent() {
-
+        iv_scan.setOnClickListener(this);
     }
 
     @Override
@@ -89,6 +97,14 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.iv_fg_home_scan:
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 1);
+                } else {
+                    startActivity(CaptureActivity.class);
+                }
+                break;
+        }
     }
 }
