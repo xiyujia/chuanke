@@ -12,12 +12,14 @@ import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 
 import com.example.chuanke.chuanke.R;
+import com.example.chuanke.chuanke.activity.DeviceActivity;
+
+import com.example.chuanke.chuanke.activity.EditFileActivity;
 import com.example.chuanke.chuanke.base.BaseFragment;
 import com.example.chuanke.chuanke.util.GlideImageLoader;
 import com.example.chuanke.chuanke.zxing.activity.CaptureActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +31,7 @@ public class HomeFragment extends BaseFragment {
     private List<Map<String, Object>> dataList;
     private SimpleAdapter adapter;
     private ArrayList< String > images =  new  ArrayList <>();
-    ImageView iv_scan;
+    ImageView iv_scan,iv_decice,iv_template;
     @Override
     public int getLayoutFile() {
         return R.layout.fragment_home;
@@ -47,6 +49,8 @@ public class HomeFragment extends BaseFragment {
         Banner banner = (Banner) findViewById(R.id.banner);
         gridView = (GridView) findViewById(R.id.gridview);
         iv_scan=findViewById(R.id.iv_fg_home_scan);
+        iv_decice=findViewById(R.id.iv_fg_home_decice);
+        iv_template=findViewById(R.id.iv_fg_home_template);
         banner.setImageLoader(new GlideImageLoader());
         banner.setImages(images);
         banner.setIndicatorGravity(BannerConfig.CENTER);
@@ -60,6 +64,8 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void initEvent() {
         iv_scan.setOnClickListener(this);
+        iv_decice.setOnClickListener(this);
+        iv_template.setOnClickListener(this);
     }
 
     @Override
@@ -78,7 +84,7 @@ public class HomeFragment extends BaseFragment {
         }
         String[] from={"img","text"};
 
-        int[] to={R.id.img,R.id.text};
+        int[] to={R.id.img, R.id.text};
 
         adapter=new SimpleAdapter(getActivity(), dataList, R.layout.gridview_item, from, to);
 
@@ -104,6 +110,12 @@ public class HomeFragment extends BaseFragment {
                 } else {
                     startActivity(CaptureActivity.class);
                 }
+                break;
+            case R.id.iv_fg_home_decice:
+                startActivity(DeviceActivity.class);
+                break;
+            case R.id.iv_fg_home_template:
+                startActivity(EditFileActivity.class);
                 break;
         }
     }

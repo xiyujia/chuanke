@@ -23,7 +23,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.hardware.camera2.CaptureRequest;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -35,11 +34,8 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 
-import com.example.chuanke.chuanke.activity.HomeActivity;
-import com.example.chuanke.chuanke.fragment.HomeFragment;
 import com.example.chuanke.chuanke.zxing.camera.CameraManager;
 import com.example.chuanke.chuanke.zxing.decode.DecodeThread;
 import com.example.chuanke.chuanke.zxing.utils.BeepManager;

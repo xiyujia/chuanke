@@ -1,11 +1,7 @@
 package com.example.chuanke.chuanke;
 
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.example.chuanke.chuanke.activity.ForgetActivity;
 import com.example.chuanke.chuanke.activity.HomeActivity;
@@ -13,8 +9,6 @@ import com.example.chuanke.chuanke.activity.LoginActivity;
 import com.example.chuanke.chuanke.activity.PersonalActivity;
 import com.example.chuanke.chuanke.activity.RegActivity;
 import com.example.chuanke.chuanke.base.BaseActivity;
-import com.example.chuanke.chuanke.base.TopBar;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
 
