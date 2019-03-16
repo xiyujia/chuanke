@@ -6,19 +6,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.chuanke.chuanke.R;
-import com.example.chuanke.chuanke.bean.FileBean;
+import com.example.chuanke.chuanke.bean.TemplateBean;
 
 import java.util.List;
 
-public class FileFragmentListAdapter extends RecyclerView.Adapter<FileFragmentListAdapter.ViewHolder> {
+public class TemplateListAdapter extends RecyclerView.Adapter<TemplateListAdapter.ViewHolder> {
     private Context mContext;
-    private List<FileBean> mList;
+    private List<TemplateBean> mList;
 
-
-    public FileFragmentListAdapter(List<FileBean> List) {
+    public TemplateListAdapter(List<TemplateBean> List) {
         this.mList=List;
     }
 
@@ -28,27 +28,27 @@ public class FileFragmentListAdapter extends RecyclerView.Adapter<FileFragmentLi
         if (mContext==null){
             mContext=viewGroup.getContext();
         }
-        View view= LayoutInflater.from(mContext).inflate(R.layout.file_layout,viewGroup,false);
+        View view= LayoutInflater.from(mContext).inflate(R.layout.item_template,viewGroup,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        FileBean bean=mList.get(i);
-        viewHolder.fileName.setText(bean.getFineName());
+        TemplateBean bean=mList.get(i);
+        viewHolder.textView.setText(bean.getTname());
     }
 
     @Override
     public int getItemCount() {
         return mList.size();
     }
-
-
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView fileName;
+        ImageView imageView;
+        TextView textView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            fileName=itemView.findViewById(R.id.tv_file_name);
+            imageView=itemView.findViewById(R.id.iv_template_img);
+            textView=itemView.findViewById(R.id.tv_template);
         }
     }
 }

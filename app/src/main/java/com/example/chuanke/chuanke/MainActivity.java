@@ -8,6 +8,7 @@ import com.example.chuanke.chuanke.activity.HomeActivity;
 import com.example.chuanke.chuanke.activity.LoginActivity;
 import com.example.chuanke.chuanke.activity.PersonalActivity;
 import com.example.chuanke.chuanke.activity.RegActivity;
+import com.example.chuanke.chuanke.activity.TemplateActivity;
 import com.example.chuanke.chuanke.base.BaseActivity;
 
 import butterknife.BindView;
@@ -33,6 +34,8 @@ public class MainActivity extends BaseActivity {
     Button personal;
     @BindView(R.id.home)
     Button home;
+    @BindView(R.id.template)
+    Button template;
     @Override
     public int getLayoutFile() {
         return R.layout.activity_main;
@@ -50,6 +53,7 @@ public class MainActivity extends BaseActivity {
         forget.setOnClickListener(this);
         personal.setOnClickListener(this);
         home.setOnClickListener(this);
+        template.setOnClickListener(this);
     }
 
     @Override
@@ -80,6 +84,8 @@ public class MainActivity extends BaseActivity {
             case R.id.home:
                 startActivity(HomeActivity.class);
                 break;
+            case R.id.template:
+                startActivity(TemplateActivity.class);
             }
     }
 }
