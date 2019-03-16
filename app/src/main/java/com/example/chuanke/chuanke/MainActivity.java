@@ -6,6 +6,7 @@ import android.widget.Button;
 import com.example.chuanke.chuanke.activity.ForgetActivity;
 import com.example.chuanke.chuanke.activity.HomeActivity;
 import com.example.chuanke.chuanke.activity.LoginActivity;
+import com.example.chuanke.chuanke.activity.MyorderActivity;
 import com.example.chuanke.chuanke.activity.PersonalActivity;
 import com.example.chuanke.chuanke.activity.RegActivity;
 import com.example.chuanke.chuanke.activity.TemplateActivity;
@@ -36,6 +37,8 @@ public class MainActivity extends BaseActivity {
     Button home;
     @BindView(R.id.template)
     Button template;
+    @BindView(R.id.myorder)
+    Button myorder;
     @Override
     public int getLayoutFile() {
         return R.layout.activity_main;
@@ -54,6 +57,7 @@ public class MainActivity extends BaseActivity {
         personal.setOnClickListener(this);
         home.setOnClickListener(this);
         template.setOnClickListener(this);
+        myorder.setOnClickListener(this);
     }
 
     @Override
@@ -86,6 +90,11 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.template:
                 startActivity(TemplateActivity.class);
+                break;
+              case R.id.myorder:
+                startActivity(MyorderActivity.class);
+                break;
+
             }
     }
 }

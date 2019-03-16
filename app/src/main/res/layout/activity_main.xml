@@ -46,9 +46,9 @@
         android:text="模板" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/myorder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="我的订单" />
 
 </LinearLayout>

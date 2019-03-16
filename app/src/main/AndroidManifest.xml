@@ -72,6 +72,7 @@
         <activity
             android:name=".activity.TemplateActivity"
             android:theme="@style/AppTheme"></activity>
+        <activity android:name=".activity.MyorderActivity"/>
     </application>
 
 </manifest>
