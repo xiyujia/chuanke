@@ -71,8 +71,12 @@
         <activity android:name=".activity.EditFileActivity" />
         <activity
             android:name=".activity.TemplateActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.MyorderActivity" />
+        <activity
+            android:name=".activity.OrderSuccessActivity"
+            android:label="@string/title_activity_order_success"
             android:theme="@style/AppTheme"></activity>
-        <activity android:name=".activity.MyorderActivity"/>
     </application>
 
 </manifest>

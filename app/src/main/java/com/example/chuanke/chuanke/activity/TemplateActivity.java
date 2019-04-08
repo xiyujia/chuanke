@@ -1,5 +1,13 @@
 package com.example.chuanke.chuanke.activity;
+/**
 
+ * 作者：赵婉竹
+
+ * 时间：2019/3/6
+
+ * 类描述：全部模板
+
+ */
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
