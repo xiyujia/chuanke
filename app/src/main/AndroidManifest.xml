@@ -76,7 +76,8 @@
         <activity
             android:name=".activity.OrderSuccessActivity"
             android:label="@string/title_activity_order_success"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.OrderDetailsActivity"></activity>
     </application>
 
 </manifest>

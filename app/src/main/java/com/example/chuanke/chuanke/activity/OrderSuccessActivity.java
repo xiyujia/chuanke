@@ -16,7 +16,6 @@ public class OrderSuccessActivity extends BaseActivity {
 
     @Override
     public void initView() {
-//        setTopBarEnable(false);
         topBar.setText("下单成功");
     }
 

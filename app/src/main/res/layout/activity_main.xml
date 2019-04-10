@@ -57,4 +57,10 @@
         android:layout_height="wrap_content"
         android:text="付款成功" />
 
+    <Button
+        android:id="@+id/orderDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="订单详情" />
+
 </LinearLayout>

@@ -7,6 +7,7 @@ import com.example.chuanke.chuanke.activity.ForgetActivity;
 import com.example.chuanke.chuanke.activity.HomeActivity;
 import com.example.chuanke.chuanke.activity.LoginActivity;
 import com.example.chuanke.chuanke.activity.MyorderActivity;
+import com.example.chuanke.chuanke.activity.OrderDetailsActivity;
 import com.example.chuanke.chuanke.activity.OrderSuccessActivity;
 import com.example.chuanke.chuanke.activity.PersonalActivity;
 import com.example.chuanke.chuanke.activity.RegActivity;
@@ -42,6 +43,8 @@ public class MainActivity extends BaseActivity {
     Button myorder;
     @BindView(R.id.orderSuccess)
     Button orderSuccess;
+    @BindView(R.id.orderDetails)
+    Button orderDetails;
 
     @Override
     public int getLayoutFile() {
@@ -63,6 +66,7 @@ public class MainActivity extends BaseActivity {
         template.setOnClickListener(this);
         myorder.setOnClickListener(this);
         orderSuccess.setOnClickListener(this);
+        orderDetails.setOnClickListener(this);
     }
 
     @Override
@@ -102,7 +106,9 @@ public class MainActivity extends BaseActivity {
             case R.id.orderSuccess:
                 startActivity(OrderSuccessActivity.class);
                 break;
-
+            case R.id.orderDetails:
+                startActivity(OrderDetailsActivity.class);
+                break;
             }
     }
 }
