@@ -7,11 +7,13 @@ import com.example.chuanke.chuanke.activity.ForgetActivity;
 import com.example.chuanke.chuanke.activity.HomeActivity;
 import com.example.chuanke.chuanke.activity.LoginActivity;
 import com.example.chuanke.chuanke.activity.MyorderActivity;
+import com.example.chuanke.chuanke.activity.NewOrderActivity;
 import com.example.chuanke.chuanke.activity.OrderDetailsActivity;
 import com.example.chuanke.chuanke.activity.OrderSuccessActivity;
 import com.example.chuanke.chuanke.activity.PersonalActivity;
 import com.example.chuanke.chuanke.activity.RegActivity;
 import com.example.chuanke.chuanke.activity.TemplateActivity;
+import com.example.chuanke.chuanke.adapter.NewOrderAdapter;
 import com.example.chuanke.chuanke.base.BaseActivity;
 
 import butterknife.BindView;
@@ -45,6 +47,8 @@ public class MainActivity extends BaseActivity {
     Button orderSuccess;
     @BindView(R.id.orderDetails)
     Button orderDetails;
+    @BindView(R.id.orderNew)
+    Button newOreder;
 
     @Override
     public int getLayoutFile() {
@@ -67,6 +71,7 @@ public class MainActivity extends BaseActivity {
         myorder.setOnClickListener(this);
         orderSuccess.setOnClickListener(this);
         orderDetails.setOnClickListener(this);
+        newOreder.setOnClickListener(this);
     }
 
     @Override
@@ -108,6 +113,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.orderDetails:
                 startActivity(OrderDetailsActivity.class);
+                break;
+            case R.id.orderNew:
+                startActivity(NewOrderActivity.class);
                 break;
             }
     }
