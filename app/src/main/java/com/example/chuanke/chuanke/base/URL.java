@@ -8,4 +8,6 @@ public class URL {
 
     //注册
     public static final String reg="api/User/register";
+    //下单
+    public static final String neworder="http://localhost/chuanke/public/index.php/api/add/order";
 }
