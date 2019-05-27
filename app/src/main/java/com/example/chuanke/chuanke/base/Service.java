@@ -3,11 +3,15 @@ package com.example.chuanke.chuanke.base;
 import com.example.chuanke.chuanke.bean.LoginBean;
 import com.example.chuanke.chuanke.bean.OrderBean;
 import com.example.chuanke.chuanke.bean.RegBean;
+import com.example.chuanke.chuanke.bean.TemplateBean;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
+import static com.example.chuanke.chuanke.base.URL.getTemplateList;
 import static com.example.chuanke.chuanke.base.URL.login;
 import static com.example.chuanke.chuanke.base.URL.neworder;
 import static com.example.chuanke.chuanke.base.URL.reg;
@@ -23,4 +27,7 @@ public interface Service {
     //下单
     @POST(neworder)
     Call<OrderBean> neworder(@Query("uid") int uid, @Query("sid") int sid, @Query("fid") int fid,@Query("opay") String opay,@Query("osum")int sum,@Query("ostarttime")String ostarttime,@Query("oendtime")String oendtime);
+    //获取模板列表
+    @POST(getTemplateList)
+    Call<List<TemplateBean>> getTemplateList();
 }

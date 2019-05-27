@@ -9,6 +9,16 @@ public class TemplateBean {
     private String tprice;
     private int tcollectnum;
     private int tusenum;
+    private String tpic;
+
+    public String getTpic() {
+        return tpic;
+    }
+
+    public void setTpic(String tpic) {
+        this.tpic = tpic;
+    }
+
     public void setTid(int tid) {
         this.tid = tid;
     }

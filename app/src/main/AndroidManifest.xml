@@ -75,10 +75,12 @@
         <activity android:name=".activity.MyorderActivity" />
         <activity
             android:name=".activity.OrderSuccessActivity"
-            android:label="@string/title_activity_order_success"
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.OrderDetailsActivity" />
-        <activity android:name=".activity.NewOrderActivity"></activity>
+        <activity android:name=".activity.NewOrderActivity" />
+        android:theme="@style/AppTheme" />
+        <activity android:name=".activity.SetActivity" />
+        <activity android:name=".activity.TemplateDetailsActivity"></activity>
     </application>
 
 </manifest>

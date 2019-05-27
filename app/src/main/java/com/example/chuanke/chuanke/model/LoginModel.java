@@ -6,10 +6,9 @@ import com.example.chuanke.chuanke.bean.LoginBean;
 
 public class LoginModel extends BaseModel<LoginBean> {
     public void login(String mobile, String pswd, final BaseListener listener) {
-        call = service.login(mobile, pswd);
-        callEnqueue(call, listener);
+           call = service.login(mobile, pswd);
+           callEnqueue(call, listener);
     }
 
-
-    }
+}
 

@@ -1,6 +1,7 @@
 package com.example.chuanke.chuanke.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,6 +37,9 @@ public class TemplateListAdapter extends RecyclerView.Adapter<TemplateListAdapte
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         TemplateBean bean=mList.get(i);
         viewHolder.textView.setText(bean.getTname());
+        String imgUrl = bean.getTpic();
+        Uri uri = Uri.parse((String) imgUrl);
+        viewHolder.imageView.setImageURI(uri);
     }
 
     @Override

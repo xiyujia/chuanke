@@ -15,7 +15,9 @@ import android.view.View;
 import com.example.chuanke.chuanke.R;
 import com.example.chuanke.chuanke.adapter.TemplateListAdapter;
 import com.example.chuanke.chuanke.base.BaseActivity;
+import com.example.chuanke.chuanke.base.BaseListener;
 import com.example.chuanke.chuanke.bean.TemplateBean;
+import com.example.chuanke.chuanke.model.TemplateListModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +37,18 @@ public class TemplateActivity extends BaseActivity {
         RecyclerView recyclerView=findViewById(R.id.recyclerview);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(gridLayoutManager);
+        TemplateListModel  templateListModel = new TemplateListModel();
+        templateListModel.getTemplateList(new BaseListener<List<TemplateBean>>() {
+            @Override
+            public void onResponse(List<TemplateBean> templatelist) {
+                        filesList = templatelist;
+            }
 
-        for (int i=0;i<20;i++){
-            TemplateBean bean=new TemplateBean();
-            bean.setTname("模板"+i);
-            filesList.add(bean);
-        }
+            @Override
+            public void onFail(String msg) {
+
+            }
+        });
 
         adapter=new TemplateListAdapter(filesList);
         recyclerView.setAdapter(adapter);
