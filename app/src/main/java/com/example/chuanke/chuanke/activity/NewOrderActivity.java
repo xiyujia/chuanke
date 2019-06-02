@@ -1,21 +1,23 @@
 package com.example.chuanke.chuanke.activity;
 
 import android.graphics.Color;
-import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.chuanke.chuanke.R;
-import com.example.chuanke.chuanke.adapter.NewOrderAdapter;
-import com.example.chuanke.chuanke.adapter.OrderDetailsAdapter;
 import com.example.chuanke.chuanke.base.BaseActivity;
-import com.example.chuanke.chuanke.bean.OrderBean;
+import com.example.chuanke.chuanke.base.BaseListener;
+import com.example.chuanke.chuanke.bean.LoginBean;
+import com.example.chuanke.chuanke.bean.NewOrderBean;
+import com.example.chuanke.chuanke.model.LoginModel;
+import com.example.chuanke.chuanke.model.NewOrderModel;
 
-import java.util.ArrayList;
-import java.util.List;
+import butterknife.BindView;
+
 /**
 
  * 作者：炎炎
@@ -26,9 +28,17 @@ import java.util.List;
 
  */
 public class NewOrderActivity extends BaseActivity {
-    private TabLayout tabLayout;
-    private List<OrderBean> orderList=new ArrayList<>();
-    private NewOrderAdapter adapter;
+    @BindView(R.id.newoStime)
+    EditText startime;
+    @BindView(R.id.newoEtime)
+    EditText endtime;
+    @BindView(R.id.newomoney)
+    TextView money;
+    @BindView(R.id.newotext)
+    EditText text;
+    @BindView(R.id.bt_new)
+    Button bt_new;
+
     @Override
     public int getLayoutFile() {
         return R.layout.activity_new_order;
@@ -37,22 +47,16 @@ public class NewOrderActivity extends BaseActivity {
     @Override
     public void initView() {
         topBar.setText("新订单");
-        RecyclerView recyclerView=findViewById(R.id.rv_new_order);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
 
-
-        OrderBean bean=new OrderBean();
-        orderList.add(bean);
-
-
-        adapter=new NewOrderAdapter(orderList);
-        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void initEvent() {
-
+        bt_new.setOnClickListener(this);
+        money.setText("10");
+        startime.setText("2019-01-24 08:20:00.00");
+        endtime.setText("2019-01-24 08:21:00.00");
+        text.setText("加急");
     }
 
     @Override
@@ -76,6 +80,31 @@ public class NewOrderActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
+        final String ostartime = startime.getText().toString();
+        final String oendtime = endtime.getText().toString();
+        final String omoney = money.getText().toString();
+        final String otext = text.getText().toString();
+        switch (v.getId()) {
+            case R.id.bt_new:
+                new NewOrderModel().neworder(1,1,1,1,"10","2019-01-24 08:20:00.00","2019-01-24 08:21:00.00", new BaseListener<NewOrderBean>() {
 
+                    @Override
+                    public void onResponse(NewOrderBean orderBean) {
+                        if (orderBean.getMsg()=="下单成功"){
+                            startActivity(OrderDetailsActivity.class);
+                            finish();
+                        }else {
+                            showToast(orderBean.getMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+
+                    }
+
+                });
+                break;
+        }
     }
 }

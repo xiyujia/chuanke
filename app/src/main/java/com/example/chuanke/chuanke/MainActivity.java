@@ -13,7 +13,6 @@ import com.example.chuanke.chuanke.activity.OrderSuccessActivity;
 import com.example.chuanke.chuanke.activity.PersonalActivity;
 import com.example.chuanke.chuanke.activity.RegActivity;
 import com.example.chuanke.chuanke.activity.TemplateActivity;
-import com.example.chuanke.chuanke.adapter.NewOrderAdapter;
 import com.example.chuanke.chuanke.base.BaseActivity;
 
 import butterknife.BindView;
