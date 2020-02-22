@@ -44,6 +44,7 @@ public class EditFileActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        topBar.setText("新建文件");
         iv=findViewById(R.id.iv);
         source=BitmapFactory.decodeResource(getResources(), R.drawable.cat);
         bitmapWidth = source.getWidth();
@@ -118,4 +119,6 @@ public class EditFileActivity extends BaseActivity {
                 break;
         }
     }
+
+
 }

@@ -4,12 +4,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.chuanke.chuanke.R;
+import com.example.chuanke.chuanke.activity.MyorderActivity;
 import com.example.chuanke.chuanke.activity.PersonalActivity;
 import com.example.chuanke.chuanke.base.BaseFragment;
 
 public class MineFragment extends BaseFragment {
 
     LinearLayout ll_persion;
+    LinearLayout ll_my_order;
     @Override
     public int getLayoutFile() {
         return R.layout.fragment_mine;
@@ -23,11 +25,13 @@ public class MineFragment extends BaseFragment {
     @Override
     public void initView() {
         ll_persion=findViewById(R.id.ll_mine_persion);
+        ll_my_order=findViewById(R.id.ll_my_order);
     }
 
     @Override
     public void initEvent() {
         ll_persion.setOnClickListener(this);
+        ll_my_order.setOnClickListener(this);
     }
 
     @Override
@@ -40,6 +44,9 @@ public class MineFragment extends BaseFragment {
         switch (v.getId()){
             case  R.id.ll_mine_persion:
                 startActivity(PersonalActivity.class);
+                break;
+            case  R.id.ll_my_order:
+                startActivity(MyorderActivity.class);
                 break;
         }
     }

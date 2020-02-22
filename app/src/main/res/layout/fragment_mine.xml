@@ -74,6 +74,7 @@
             android:layout_height="1dp"
             android:background="@color/hui"/>
         <LinearLayout
+            android:id="@+id/ll_my_order"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:orientation="horizontal"

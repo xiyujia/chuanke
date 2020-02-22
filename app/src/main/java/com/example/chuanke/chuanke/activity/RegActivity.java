@@ -206,6 +206,8 @@ public class RegActivity extends BaseActivity {
                         @Override
                         public void onResponse(RegBean regBean) {
                             showToast(regBean.getMsg());
+                            startActivity(LoginActivity.class);
+                            finish();
                         }
 
                         @Override

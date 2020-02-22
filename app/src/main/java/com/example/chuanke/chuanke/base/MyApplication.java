@@ -1,8 +1,15 @@
 package com.example.chuanke.chuanke.base;
 
 import android.app.Application;
+import android.graphics.Bitmap;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
 /**
 
@@ -15,9 +22,13 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 */
 
 public class MyApplication extends Application {
+
+    public static int uid;
+
     @Override
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
+
     }
 }

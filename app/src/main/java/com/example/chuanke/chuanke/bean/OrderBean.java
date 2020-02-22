@@ -15,117 +15,160 @@ public class OrderBean {
      * @website http://www.bejson.com/java2pojo/
      */
 
-        private int oid;
-        private String ostate;
-        private String oplaystate;
-        private String opaystate;
-        private String oupdatetime;
-        private String opay;
-        private String ostarttime;
-        private String oendtime;
-        private int uid;
-        private int sid;
-        private int fid;
-        private String opic;
-        private String ono;
-        private int osum;
-        public void setOid(int oid) {
-            this.oid = oid;
-        }
-        public int getOid() {
-            return oid;
-        }
+    private int oid;
+    private String ostate;
+    private String oplaystate;
+    private String opaystate;
+    private String oupdatetime;
+    private String opay;
+    private String ostarttime;
+    private String oendtime;
+    private String filename;
+    private String splace;
 
-        public void setOstate(String ostate) {
-            this.ostate = ostate;
-        }
-        public String getOstate() {
-            return ostate;
-        }
+    public String getFilename() {
+        return filename;
+    }
 
-        public void setOplaystate(String oplaystate) {
-            this.oplaystate = oplaystate;
-        }
-        public String getOplaystate() {
-            return oplaystate;
-        }
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
-        public void setOpaystate(String opaystate) {
-            this.opaystate = opaystate;
-        }
-        public String getOpaystate() {
-            return opaystate;
-        }
+    public String getSplace() {
+        return splace;
+    }
 
-        public void setOupdatetime(String oupdatetime) {
-            this.oupdatetime = oupdatetime;
-        }
-        public String getOupdatetime() {
-            return oupdatetime;
-        }
+    public void setSplace(String splace) {
+        this.splace = splace;
+    }
 
-        public void setOpay(String opay) {
-            this.opay = opay;
-        }
-        public String getOpay() {
-            return opay;
-        }
+    public String getFpic() {
+        return fpic;
+    }
 
-        public void setOstarttime(String ostarttime) {
-            this.ostarttime = ostarttime;
-        }
-        public String getOstarttime() {
-            return ostarttime;
-        }
+    public void setFpic(String fpic) {
+        this.fpic = fpic;
+    }
 
-        public void setOendtime(String oendtime) {
-            this.oendtime = oendtime;
-        }
-        public String getOendtime() {
-            return oendtime;
-        }
+    private String fpic;
+    private int uid;
+    private int sid;
+    private int fid;
+    private String opic;
+    private String ono;
+    private int osum;
 
-        public void setUid(int uid) {
-            this.uid = uid;
-        }
-        public int getUid() {
-            return uid;
-        }
+    public void setOid(int oid) {
+        this.oid = oid;
+    }
 
-        public void setSid(int sid) {
-            this.sid = sid;
-        }
-        public int getSid() {
-            return sid;
-        }
+    public int getOid() {
+        return oid;
+    }
 
-        public void setFid(int fid) {
-            this.fid = fid;
-        }
-        public int getFid() {
-            return fid;
-        }
+    public void setOstate(String ostate) {
+        this.ostate = ostate;
+    }
 
-        public void setOpic(String opic) {
-            this.opic = opic;
-        }
-        public String getOpic() {
-            return opic;
-        }
+    public String getOstate() {
+        return ostate;
+    }
 
-        public void setOno(String ono) {
-            this.ono = ono;
-        }
-        public String getOno() {
-            return ono;
-        }
+    public void setOplaystate(String oplaystate) {
+        this.oplaystate = oplaystate;
+    }
 
-        public void setOsum(int osum) {
-            this.osum = osum;
-        }
-        public int getOsum() {
-            return osum;
-        }
+    public String getOplaystate() {
+        return oplaystate;
+    }
+
+    public void setOpaystate(String opaystate) {
+        this.opaystate = opaystate;
+    }
+
+    public String getOpaystate() {
+        return opaystate;
+    }
+
+    public void setOupdatetime(String oupdatetime) {
+        this.oupdatetime = oupdatetime;
+    }
+
+    public String getOupdatetime() {
+        return oupdatetime;
+    }
+
+    public void setOpay(String opay) {
+        this.opay = opay;
+    }
+
+    public String getOpay() {
+        return opay;
+    }
+
+    public void setOstarttime(String ostarttime) {
+        this.ostarttime = ostarttime;
+    }
+
+    public String getOstarttime() {
+        return ostarttime;
+    }
+
+    public void setOendtime(String oendtime) {
+        this.oendtime = oendtime;
+    }
+
+    public String getOendtime() {
+        return oendtime;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setSid(int sid) {
+        this.sid = sid;
+    }
+
+    public int getSid() {
+        return sid;
+    }
+
+    public void setFid(int fid) {
+        this.fid = fid;
+    }
+
+    public int getFid() {
+        return fid;
+    }
+
+    public void setOpic(String opic) {
+        this.opic = opic;
+    }
+
+    public String getOpic() {
+        return opic;
+    }
+
+    public void setOno(String ono) {
+        this.ono = ono;
+    }
+
+    public String getOno() {
+        return ono;
+    }
+
+    public void setOsum(int osum) {
+        this.osum = osum;
+    }
+
+    public int getOsum() {
+        return osum;
+    }
 
 
 }

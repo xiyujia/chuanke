@@ -54,9 +54,9 @@ public class NewOrderActivity extends BaseActivity {
     public void initEvent() {
         bt_new.setOnClickListener(this);
         money.setText("10");
-        startime.setText("2019-01-24 08:20:00.00");
-        endtime.setText("2019-01-24 08:21:00.00");
-        text.setText("加急");
+        startime.setText("2019-06-05 13:00:00");
+        endtime.setText("2019-06-05 14:00:00");
+        text.setText("4");
     }
 
     @Override
@@ -86,12 +86,12 @@ public class NewOrderActivity extends BaseActivity {
         final String otext = text.getText().toString();
         switch (v.getId()) {
             case R.id.bt_new:
-                new NewOrderModel().neworder(1,1,1,1,"10","2019-01-24 08:20:00.00","2019-01-24 08:21:00.00", new BaseListener<NewOrderBean>() {
+                new NewOrderModel().neworder(1,3,otext,1,"10",ostartime,oendtime, new BaseListener<NewOrderBean>() {
 
                     @Override
                     public void onResponse(NewOrderBean orderBean) {
-                        if (orderBean.getMsg()=="下单成功"){
-                            startActivity(OrderDetailsActivity.class);
+                        if (orderBean.getStatus().equals("1")){
+                            startActivity(OrderSuccessActivity.class);
                             finish();
                         }else {
                             showToast(orderBean.getMsg());

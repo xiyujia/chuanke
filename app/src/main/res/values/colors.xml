@@ -6,4 +6,29 @@
     <color name="background">#F2F2F2</color>
     <color name="black">#000000</color>
     <color name="hui">#999999</color>
+    <color name="white">#ffffff</color>
+    <color name="stand_bg">#fff6f6f6</color>
+    <color name="gray">#FF888888</color>
+    <color name="grey">#a6aebb</color>
+    <color name="message_type_selected_start">#ff883b</color>
+    <color name="message_type_selected_end">#f95543</color>
+    <color name="order_title">#8895C5</color>
+    <color name="green">#85E266</color>
+
+    <color name="color_100">#222222</color>
+    <color name="color_101">#666666</color>
+    <color name="color_102">#999999</color>
+    <color name="color_103">#b1b9bf</color>
+    <color name="color_104">#cccccc</color>
+    <color name="color_105">#dddddd</color>
+    <color name="color_106">#e5e5e5</color>
+    <color name="color_107">#f2f3f4</color>
+    <color name="color_108">#f7f7f7</color>
+    <color name="color_109">#ffffffff</color>
+    <color name="color_110">#91999F</color>
+    <color name="color_111">#270000</color>
+    <color name="color_112">#FF98BDFF</color>
+    <color name="color_113">#FFFFBA64</color>
+    <color name="color_114">#58D1FF</color>
+    <color name="color_115">#F5F5F5</color>
 </resources>

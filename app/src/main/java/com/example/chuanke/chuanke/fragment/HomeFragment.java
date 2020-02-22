@@ -3,6 +3,8 @@ package com.example.chuanke.chuanke.fragment;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -11,12 +13,18 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.chuanke.chuanke.R;
 import com.example.chuanke.chuanke.activity.DeviceActivity;
 
 import com.example.chuanke.chuanke.activity.EditFileActivity;
+import com.example.chuanke.chuanke.activity.TemplateActivity;
 import com.example.chuanke.chuanke.base.BaseFragment;
+import com.example.chuanke.chuanke.base.URL;
+import com.example.chuanke.chuanke.bean.AdBean;
 import com.example.chuanke.chuanke.util.GlideImageLoader;
+import com.example.chuanke.chuanke.util.HttpUtil;
 import com.example.chuanke.chuanke.zxing.activity.CaptureActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -39,23 +47,20 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initSetting() {
-        images.add("http://seopic.699pic.com/photo/00005/5186.jpg_wh1200.jpg");
-        images.add("http://seopic.699pic.com/photo/50010/0719.jpg_wh1200.jpg");
-        images.add("http://seopic.699pic.com/photo/50009/9449.jpg_wh1200.jpg");
+
+        HttpUtil.doJsonPost(handler, URL.BASE_URL+ "api/Lists/advertise","");
+
+//        images.add("http://seopic.699pic.com/photo/00005/5186.jpg_wh1200.jpg");
+//        images.add("http://seopic.699pic.com/photo/50010/0719.jpg_wh1200.jpg");
+//        images.add("http://seopic.699pic.com/photo/50009/9449.jpg_wh1200.jpg");
     }
 
     @Override
     public void initView() {
-        Banner banner = (Banner) findViewById(R.id.banner);
-        gridView = (GridView) findViewById(R.id.gridview);
+        gridView = findViewById(R.id.gridview);
         iv_scan=findViewById(R.id.iv_fg_home_scan);
         iv_decice=findViewById(R.id.iv_fg_home_decice);
         iv_template=findViewById(R.id.iv_fg_home_template);
-        banner.setImageLoader(new GlideImageLoader());
-        banner.setImages(images);
-        banner.setIndicatorGravity(BannerConfig.CENTER);
-//        banner.setBannerAnimation(Transformer.DepthPage);
-        banner.start();
 
         //初始化数据
 
@@ -115,8 +120,32 @@ public class HomeFragment extends BaseFragment {
                 startActivity(DeviceActivity.class);
                 break;
             case R.id.iv_fg_home_template:
-                startActivity(EditFileActivity.class);
+                startActivity(TemplateActivity.class);
                 break;
         }
     }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            String result = (String) msg.obj;
+            if(result != null) {
+                List<AdBean> adBeans;
+                JSONArray jsonArray = JSONArray.parseArray(result);
+                adBeans = jsonArray.toJavaList(AdBean.class);
+
+                for (int i=0;i<adBeans.size();i++){
+                    images.add(URL.BASE_AD_PIC_URL + adBeans.get(i).getAdpic());
+                }
+
+                Banner banner = findViewById(R.id.banner);
+                banner.setImageLoader(new GlideImageLoader());
+                banner.setImages(images);
+                banner.setIndicatorGravity(BannerConfig.CENTER);
+//        banner.setBannerAnimation(Transformer.DepthPage);
+                banner.start();
+            }
+
+        }
+    };
 }

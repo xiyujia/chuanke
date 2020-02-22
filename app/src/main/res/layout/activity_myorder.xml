@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.chuanke.chuanke.activity.MyorderActivity">
-    <android.support.v7.widget.RecyclerView
+    tools:context="com.example.chuanke.chuanke.activity.MyorderActivity"
+    android:orientation="vertical">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:tabBackground="@color/stand_bg"
+        app:tabIndicatorColor="@color/black"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed"
+        app:tabPaddingEnd="0dp"
+        app:tabPaddingStart="0dp"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="@color/gray"
+        app:tabGravity="fill"/>
+    <com.example.chuanke.chuanke.util.CustomListView
         android:id="@+id/rv_myorder_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:divider="@null">
+    </com.example.chuanke.chuanke.util.CustomListView>
+</LinearLayout>

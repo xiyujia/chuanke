@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.chuanke.chuanke.R;
 import com.example.chuanke.chuanke.base.BaseActivity;
 import com.example.chuanke.chuanke.base.BaseListener;
+import com.example.chuanke.chuanke.base.MyApplication;
 import com.example.chuanke.chuanke.bean.LoginBean;
 import com.example.chuanke.chuanke.model.LoginModel;
 import com.example.chuanke.chuanke.util.Phone;
@@ -147,6 +148,7 @@ public class LoginActivity extends BaseActivity {
                         public void onResponse(LoginBean loginBean) {
                             if (loginBean.getUname()!=null){
                                 startActivity(HomeActivity.class);
+                                MyApplication.uid = loginBean.getUid();
                                 finish();
                             }else {
                                 showToast("账号或密码错误");

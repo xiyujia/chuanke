@@ -1,5 +1,8 @@
 package com.example.chuanke.chuanke.fragment;
 
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,11 +18,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.chuanke.chuanke.R;
+import com.example.chuanke.chuanke.activity.EditFileActivity;
+import com.example.chuanke.chuanke.activity.FileChooseActivity;
+import com.example.chuanke.chuanke.activity.UploadActivity;
 import com.example.chuanke.chuanke.adapter.FileFragmentListAdapter;
 import com.example.chuanke.chuanke.base.BaseFragment;
+import com.example.chuanke.chuanke.base.MyApplication;
+import com.example.chuanke.chuanke.base.URL;
 import com.example.chuanke.chuanke.bean.FileBean;
 import com.example.chuanke.chuanke.util.GlideImageLoader;
+import com.example.chuanke.chuanke.util.HttpUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -31,19 +42,21 @@ import butterknife.BindView;
 
 import static android.widget.LinearLayout.HORIZONTAL;
 import static com.youth.banner.BannerConfig.PADDING_SIZE;
-/**
 
-* 作者：张恺
-
-* 时间：2019/2/28
-
-* 类描述：文件fragment
-
-*/
-
-public class FileFragment extends BaseFragment  {
-    private List<FileBean> filesList=new ArrayList<>();
+public class FileFragment extends BaseFragment {
+    private List<FileBean> filesList = new ArrayList<>();
     private FileFragmentListAdapter adapter;
+    RecyclerView recyclerView;
+    FloatingActionButton floatingActionButton;
+
+    GridLayoutManager gridLayoutManager;
+
+    int uid;
+    String sid;
+    int fid;
+    String sprice;
+    int tempDelPosition;
+
     @Override
     public int getLayoutFile() {
         return R.layout.fragment_file;
@@ -56,32 +69,108 @@ public class FileFragment extends BaseFragment  {
 
     @Override
     public void initView() {
-        FloatingActionButton floatingActionButton=findViewById(R.id.floatbutton);
-        RecyclerView recyclerView=findViewById(R.id.rv_file_fragment);
-//        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        for (int i=0;i<20;i++){
-            FileBean bean=new FileBean();
-            bean.setFineName("文件"+i);
-            filesList.add(bean);
-        }
-
-
-
-        adapter=new FileFragmentListAdapter(filesList);
-        recyclerView.setAdapter(adapter);
+        floatingActionButton = findViewById(R.id.floatbutton);
+        recyclerView = findViewById(R.id.rv_file_fragment);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("添加");
+                Intent intent = new Intent(getContext(),UploadActivity.class);
+                intent.putExtra("oprateType","add");
+                startActivity(intent);
             }
         });
+
+        adapter = new FileFragmentListAdapter(getActivity(), filesList);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void initEvent() {
+        uid = MyApplication.uid;
+        uid = 1;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("uid", uid);
+        HttpUtil.doJsonPost(handler, URL.BASE_URL + "api/Lists/file", jsonObject.toJSONString());
+    }
 
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            String result = (String) msg.obj;
+            if (result != null) {
+                JSONArray item = JSONArray.parseArray(result);
+//        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+                filesList = item.toJavaList(FileBean.class);
+                gridLayoutManager = new GridLayoutManager(getContext(), 1);
+                recyclerView.setLayoutManager(gridLayoutManager);
+
+                adapter = new FileFragmentListAdapter(getActivity(), filesList);
+                recyclerView.setAdapter(adapter);
+                // 设置item及item中控件的点击事件
+                adapter.setOnItemClickListener(MyItemClickListener);
+
+            }
+        }
+    };
+
+    /**
+     * item＋item里的控件点击监听事件
+     */
+    private FileFragmentListAdapter.OnItemClickListener MyItemClickListener = new FileFragmentListAdapter.OnItemClickListener() {
+
+        @Override
+        public void onItemClick(View v, FileFragmentListAdapter.ViewName viewName, int position) {
+            //viewName可区分item及item内部控件
+            switch (v.getId()) {
+                case R.id.tv_file_delete:
+                    JSONObject jsonObject = new JSONObject();
+                    fid = filesList.get(position).getFid();
+                    jsonObject.put("uid", uid);
+                    jsonObject.put("fid", fid);
+                    HttpUtil.doJsonPost(handlerDelete, URL.BASE_URL + "api/delete/file", jsonObject.toJSONString());
+                    tempDelPosition = position;
+                    break;
+                case R.id.tv_file_put:
+
+                    Toast.makeText(getContext(), "你点击了toufang按钮" + (position + 1), Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    Intent intent = new Intent(getContext(),UploadActivity.class);
+                    fid = filesList.get(position).getFid();
+                    intent.putExtra("fid",fid);
+                    intent.putExtra("oprateType","update");
+                    startActivity(intent);
+                    break;
+            }
+        }
+
+        Handler handlerDelete = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                String result = (String) msg.obj;
+                if (result != null) {
+                    JSONObject json = JSONObject.parseObject(result);
+                    String msg2 = json.getString("msg");
+                    Toast.makeText(getContext(), msg2, Toast.LENGTH_SHORT).show();
+                    adapter.removeData(tempDelPosition);
+                }
+            }
+        };
+
+        @Override
+        public void onItemLongClick(View v) {
+
+        }
+    };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        uid = MyApplication.uid;
+        uid = 1;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("uid", uid);
+        HttpUtil.doJsonPost(handler, URL.BASE_URL + "api/Lists/file", jsonObject.toJSONString());
     }
 
     @Override

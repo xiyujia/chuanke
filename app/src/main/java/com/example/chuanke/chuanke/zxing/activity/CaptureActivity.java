@@ -23,11 +23,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -65,6 +67,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 	private RelativeLayout scanContainer;
 	private RelativeLayout scanCropView;
 	private ImageView scanLine;
+	private ImageView iv_back;
 
 	private Rect mCropRect = null;
 
@@ -82,14 +85,22 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		Window window = getWindow();
-		window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//		Window window = getWindow();
+//		window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.activity_capture);
+//		setTranslucentStatus();
 
-		scanPreview = (SurfaceView) findViewById(R.id.capture_preview);
-		scanContainer = (RelativeLayout) findViewById(R.id.capture_container);
-		scanCropView = (RelativeLayout) findViewById(R.id.capture_crop_view);
-		scanLine = (ImageView) findViewById(R.id.capture_scan_line);
+		scanPreview = findViewById(R.id.capture_preview);
+		scanContainer = findViewById(R.id.capture_container);
+		scanCropView = findViewById(R.id.capture_crop_view);
+		scanLine = findViewById(R.id.capture_scan_line);
+        iv_back = findViewById(R.id.iv_back);
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 		inactivityTimer = new InactivityTimer(this);
 		beepManager = new BeepManager(this);
@@ -191,6 +202,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 		bundle.putInt("height", mCropRect.height());
 		bundle.putString("result", rawResult.getText());
 		startActivity(new Intent(CaptureActivity.this, ResultActivity.class).putExtras(bundle));
+		finish();
 	}
 
 	private void initCamera(SurfaceHolder surfaceHolder) {
@@ -300,5 +312,17 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	//设置上方信号栏为透明,
+	protected void setTranslucentStatus() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < 20) {
+
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+		} else if (Build.VERSION.SDK_INT >= 21) {
+			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+					| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+		}
 	}
 }
