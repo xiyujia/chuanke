@@ -1,8 +1,12 @@
 package com.example.chuanke.chuanke.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,16 +17,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.chuanke.chuanke.R;
+import com.example.chuanke.chuanke.activity.DeviceActivity;
 import com.example.chuanke.chuanke.activity.EditFileActivity;
 import com.example.chuanke.chuanke.activity.FileChooseActivity;
+import com.example.chuanke.chuanke.activity.PlayTimeActivity;
 import com.example.chuanke.chuanke.activity.UploadActivity;
 import com.example.chuanke.chuanke.adapter.FileFragmentListAdapter;
 import com.example.chuanke.chuanke.base.BaseFragment;
@@ -31,6 +39,7 @@ import com.example.chuanke.chuanke.base.URL;
 import com.example.chuanke.chuanke.bean.FileBean;
 import com.example.chuanke.chuanke.util.GlideImageLoader;
 import com.example.chuanke.chuanke.util.HttpUtil;
+import com.gyf.barlibrary.ImmersionBar;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -41,15 +50,19 @@ import java.util.List;
 import butterknife.BindView;
 
 import static android.widget.LinearLayout.HORIZONTAL;
+import static com.example.chuanke.chuanke.component.StatusBar.initImmersionBarForTopBar;
+import static com.example.chuanke.chuanke.component.StatusBar.initImmersionBarOfColorBar;
+import static com.example.chuanke.chuanke.component.StatusBar.setTranslucentStatus;
 import static com.youth.banner.BannerConfig.PADDING_SIZE;
 
 public class FileFragment extends BaseFragment {
     private List<FileBean> filesList = new ArrayList<>();
     private FileFragmentListAdapter adapter;
     RecyclerView recyclerView;
-    FloatingActionButton floatingActionButton;
+    private FloatingActionButton floatingActionButton;
+    private RelativeLayout topbar_root;
 
-    GridLayoutManager gridLayoutManager;
+    private GridLayoutManager gridLayoutManager;
 
     int uid;
     String sid;
@@ -69,8 +82,13 @@ public class FileFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        topbar_root = findViewById(R.id.topbar_root);
+//        initImmersionBarOfColorBar(R.color.white, true,this.getActivity());//沉浸式状态栏
+//        initImmersionBarForTopBar(topbar_root,false,getActivity());
+        setTranslucentStatus();
         floatingActionButton = findViewById(R.id.floatbutton);
         recyclerView = findViewById(R.id.rv_file_fragment);
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,8 +149,9 @@ public class FileFragment extends BaseFragment {
                     tempDelPosition = position;
                     break;
                 case R.id.tv_file_put:
-
-                    Toast.makeText(getContext(), "你点击了toufang按钮" + (position + 1), Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(getContext(), DeviceActivity.class);
+                    intent1.putExtra("fid",fid);
+                    startActivity(intent1);
                     break;
                 default:
                     Intent intent = new Intent(getContext(),UploadActivity.class);
@@ -181,5 +200,19 @@ public class FileFragment extends BaseFragment {
     @Override
     public void onClick(View v) {
 
+    }
+
+    protected void setTranslucentStatus() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < 20) {
+
+            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        } else if (Build.VERSION.SDK_INT >= 21) {
+
+            View decorView = getActivity().getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
     }
 }

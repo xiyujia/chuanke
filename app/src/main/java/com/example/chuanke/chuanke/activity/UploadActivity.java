@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.ColorRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -43,6 +44,7 @@ import com.example.chuanke.chuanke.bean.FileBean;
 import com.example.chuanke.chuanke.bean.UpLoadBean;
 import com.example.chuanke.chuanke.util.HttpUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.gyf.barlibrary.ImmersionBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -85,6 +87,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
     private LinearLayout ll_submit;
     private DisplayImageOptions options ;
     private ImageLoader imageLoader;
+    public ImmersionBar immersionBar;//沉浸式状态栏
 
     private File tempImg;
     private File tempImg1;
@@ -101,7 +104,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_file);
-        setTranslucentStatus();
+        initImmersionBarOfColorBar(R.color.white, true);
         iv_upload=findViewById(R.id.iv_upload);
         iv_upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -548,15 +551,25 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
         popupWindow.showAtLocation(popView, Gravity.BOTTOM,0,50);
     }
 
-    //设置上方信号栏为透明,
-    protected void setTranslucentStatus() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < 20) {
-
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-        } else if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    /**
+     * 初始化状态栏:纯色状态栏
+     * 使用“改变状态栏颜色”方案
+     *
+     * @param statusBarColor      状态栏颜色
+     * @param isStatusBarDarkFont 是否使用深色字体
+     */
+    protected void initImmersionBarOfColorBar(@ColorRes int statusBarColor, boolean isStatusBarDarkFont) {
+        if (immersionBar == null) {
+            immersionBar = ImmersionBar.with(this);
+            immersionBar
+                    .keyboardEnable(true)//解决软键盘与底部输入框冲突问题，默认为false，还有一个重载方法，可以指定软键盘mode
+                    .navigationBarWithKitkatEnable(false) //是否可以修改安卓4.4和emui3.1手机导航栏颜色，默认为true
+                    .init();
         }
+        immersionBar
+                .fitsSystemWindows(true)
+                .statusBarColor(statusBarColor)
+                .statusBarDarkFont(isStatusBarDarkFont, 0.2f)
+                .init();
     }
 }

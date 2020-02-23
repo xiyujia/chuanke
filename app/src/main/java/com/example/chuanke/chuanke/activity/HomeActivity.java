@@ -18,15 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-/**
-
-* 作者：张恺
-
-* 时间：2019/1/28
-
-* 类描述：主页
-
-*/
+import static com.example.chuanke.chuanke.component.StatusBar.initImmersionBarOfColorBar;
 
 public class HomeActivity extends BaseActivity {
 
@@ -76,4 +68,5 @@ public class HomeActivity extends BaseActivity {
     public void onClick(View v) {
 
     }
+
 }

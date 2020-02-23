@@ -1,6 +1,7 @@
 package com.example.chuanke.chuanke.fragment;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.chuanke.chuanke.R;
@@ -8,9 +9,11 @@ import com.example.chuanke.chuanke.activity.MyorderActivity;
 import com.example.chuanke.chuanke.activity.PersonalActivity;
 import com.example.chuanke.chuanke.base.BaseFragment;
 
+import static com.example.chuanke.chuanke.component.StatusBar.initImmersionBarOfColorBar;
+
 public class MineFragment extends BaseFragment {
 
-    LinearLayout ll_persion;
+    ImageView ll_persion;
     LinearLayout ll_my_order;
     @Override
     public int getLayoutFile() {

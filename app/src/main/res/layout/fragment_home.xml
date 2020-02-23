@@ -100,7 +100,7 @@
             android:layout_marginTop="10dp"
             android:text="为你推荐"
             android:textColor="#3e3d3d"
-            android:textSize="27sp" />
+            android:textSize="18sp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

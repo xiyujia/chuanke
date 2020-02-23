@@ -24,17 +24,17 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="15dp"
                 android:orientation="vertical">
-
                 <TextView
-                    android:id="@+id/tv_school_name"
+                    android:id="@+id/tv_device_address"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="大连东软信息学院图书馆"
-                    android:textColor="@color/colorAccent"
+                    android:text="大连东软信息学院图书馆A5中心阅览室"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -68,7 +68,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginRight="10dp"
                     android:orientation="vertical">
                     <com.facebook.drawee.view.SimpleDraweeView
@@ -90,14 +90,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
                         android:orientation="vertical">
-
                         <TextView
-                            android:id="@+id/tv_device_address"
+                            android:id="@+id/tv_school_name"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="大连东软信息学院图书馆A5中心阅览室"
-                            android:textColor="@color/black"
+                            android:text="大连东软信息学院图书馆"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textColor="@color/colorAccent"
                             android:textSize="16sp" />
                     </LinearLayout>
 
@@ -160,7 +161,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginBottom="5dp"
                     android:orientation="horizontal">
 
@@ -168,7 +169,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"
-                        android:layout_marginLeft="10dp"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:text="订单编号："

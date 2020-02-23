@@ -1,5 +1,8 @@
 package com.example.chuanke.chuanke.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -28,8 +32,10 @@ public class OrderDetailsActivity extends BaseActivity {
 
     private int oid;
     private String orderDetailUrl = URL.BASE_URL + "api/Lists/orderDetail";
-    OrderBean orderBean = new OrderBean();
-    ScreenDetailBean screenDetailBean = new ScreenDetailBean();
+    private String opay;
+    private double osum;
+    private OrderBean orderBean = new OrderBean();
+    private ScreenDetailBean screenDetailBean = new ScreenDetailBean();
 
     private TextView tvPlayTime;
     private TextView tvEndTime;
@@ -81,7 +87,7 @@ public class OrderDetailsActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        oid = getIntent().getIntExtra("oid",0);//获取传递的资源id
+        oid = getIntent().getIntExtra("oid",-1);//获取传递的资源id
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("oid", oid);
         jsonObject.put("uid", MyApplication.uid);
@@ -94,27 +100,46 @@ public class OrderDetailsActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             String result = (String) msg.obj;
             if (result != null) {
-                JSONObject json = JSONObject.parseObject(result);
+                final JSONObject json = JSONObject.parseObject(result);
+                if(!"".equals(json.getString("error")) && null != json.getString("error")){
+                    Toast.makeText(OrderDetailsActivity.this,json.getString("msg"),Toast.LENGTH_SHORT).show();
+                    finish();
+                    return;
+                }
                 JSONObject order = json.getJSONObject("0");
                 JSONObject screenDetail = json.getJSONArray("screenDetail").getJSONObject(0);
                 orderBean = order.toJavaObject(OrderBean.class);
                 screenDetailBean = screenDetail.toJavaObject(ScreenDetailBean.class);
-
+                osum = orderBean.getOsum();
                 tvPlayTime.setText(orderBean.getOstarttime());
                 tvEndTime.setText(orderBean.getOendtime());
-                if("2".equals(orderBean.getOpaystate())){
+                if("1".equals(orderBean.getOpaystate())){
                     tvPayState.setText("支付成功");
+                    tvPayState.setTextColor(0xff85E266);
                     ll_paymethod.setVisibility(View.VISIBLE);
-                    if(orderBean.getOpay() == "0"){
+                    ll_payfor.setVisibility(View.GONE);
+                    if("1".equals(orderBean.getOpay())){
                         tvPayMethod.setText("支付宝");
                     } else {
                         tvPayMethod.setText("微信支付");
                     }
-                } else {
+                } else if("0".equals(orderBean.getOpaystate())){
+                    opay = orderBean.getOpay();
                     tvPayState.setText("未支付");
                     tvPayState.setTextColor(0xffff883b);
                     ll_paymethod.setVisibility(View.GONE);
                     ll_payfor.setVisibility(View.VISIBLE);
+                    ll_payfor.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            tipClick();
+                        }
+                    });
+                } else if("2".equals(orderBean.getOpaystate())){
+                    tvPayState.setText("已取消");
+                    tvPayState.setTextColor(0xffff883b);
+                    ll_paymethod.setVisibility(View.GONE);
+                    ll_payfor.setVisibility(View.GONE);
                 }
 //                tvPayMethod.setText(orderBean.get());
                 tvPlace.setText(screenDetailBean.getSplace());
@@ -128,7 +153,7 @@ public class OrderDetailsActivity extends BaseActivity {
                     tv_devicestate.setText("正在播放");
                 }
 
-                String picUrl = URL.BASE_DEVICE_PIC_URL + screenDetailBean.getSpic();
+                String picUrl = URL.BASE_FILE_PIC_URL + orderBean.getOpic();
 //        imageLoader.DisplayImage(picUrl, activity, holder.imgOffer);
 
                 imageLoader = ImageLoader.getInstance();
@@ -147,6 +172,81 @@ public class OrderDetailsActivity extends BaseActivity {
         }
     };
 
+    Handler payHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = (String) msg.obj;
+            if (result != null) {
+                final JSONObject json = JSONObject.parseObject(result);
+                String status = json.getString("error");
+                if("1".equals(status)){
+                    Toast.makeText(OrderDetailsActivity.this,"支付成功！",Toast.LENGTH_SHORT).show();
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("oid", oid);
+                    jsonObject.put("uid", MyApplication.uid);
+                    jsonObject.put("uid", 1);
+                    HttpUtil.doJsonPost(handler, orderDetailUrl, jsonObject.toJSONString());
+                } else {
+                    Toast.makeText(OrderDetailsActivity.this,"出错了！稍后再试吧！",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    };
+
+    /**
+     * 支付确认对话框
+     */
+    public void tipClick() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("确认支付");
+        builder.setMessage("请确认支付￥"+ osum +"元?");
+        builder.setIcon(R.mipmap.ic_launcher_round);
+        //点击对话框以外的区域是否让对话框消失
+        builder.setCancelable(false);
+        //设置正面按钮
+        builder.setPositiveButton("立即支付", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+//                Toast.makeText(OrderDetailsActivity.this, "你点击了是的", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+
+                JSONObject jsonObject = new JSONObject();
+                int uid = MyApplication.uid;
+                uid = 1;
+                jsonObject.put("uid",uid);
+                jsonObject.put("oid",oid);
+                jsonObject.put("opay",opay);
+                HttpUtil.doJsonPost(payHandler,URL.BASE_URL + "api/Add/payOrder",jsonObject.toJSONString());
+            }
+        });
+        //设置反面按钮
+        builder.setNegativeButton("稍后支付", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+//                Toast.makeText(OrderDetailsActivity.this, "你点击了不是", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        //对话框显示的监听事件
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+
+            }
+        });
+        //对话框消失的监听事件
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+        //显示对话框
+        dialog.show();
+    }
     @Override
     protected void initSetting() {
 

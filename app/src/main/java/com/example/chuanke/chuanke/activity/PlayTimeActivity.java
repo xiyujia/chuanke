@@ -3,6 +3,8 @@ package com.example.chuanke.chuanke.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +18,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.chuanke.chuanke.R;
 import com.example.chuanke.chuanke.base.BaseActivity;
 import com.example.chuanke.chuanke.base.MyApplication;
+import com.example.chuanke.chuanke.base.URL;
 import com.example.chuanke.chuanke.component.DateTimePickDialog;
+import com.example.chuanke.chuanke.util.HttpUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,8 +53,11 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
     private int uid = MyApplication.uid;
     private int sid = -1;
     private int fid = -1;
-    private float sprice;
+    private double sprice;
     private int payMethod = 1;
+    private double osum = 1;
+    private String ostarttime ;
+    private String oendtime ;
 
     @Override
     public int getLayoutFile() {
@@ -89,7 +96,7 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
         fid = intent.getIntExtra("fid",-1);
         String strPrice = intent.getStringExtra("sprice");
         if(null != strPrice && !"".equals(strPrice)){
-            sprice = Float.parseFloat(strPrice);
+            sprice = Double.parseDouble(strPrice);
 
         }
         tv_one_price.setText("￥" + sprice + "/小时");
@@ -124,7 +131,8 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
                         dateTime1.minute = minute;
                         tv_choose_start_date.setText(dateTime1.year + "-" + dateTime1.month + "-"
                                 + dateTime1.day + "  " + dateTime1.hour + ":" + dateTime1.minute);
-
+                        ostarttime = dateTime1.year + "-" + dateTime1.month + "-"
+                                + dateTime1.day + "  " + dateTime1.hour + ":" + dateTime1.minute;
                         currentMills = System.currentTimeMillis();
                         startDateMills = dateTime2mill(dateTime1.year + "-" + dateTime1.month
                                 + "-" + dateTime1.day + " " + dateTime1.hour + ":" + dateTime1.minute);
@@ -146,9 +154,11 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
                                 if((endDateMills - startDateMills) / 1000 % 3600 != 0){
                                     tv_order_price.setText((((endDateMills - startDateMills) / 1000 / 3600 + 1) * sprice) + "");
                                     tv_sum_price.setText((((endDateMills - startDateMills) / 1000 / 3600 + 1) * sprice) + "");
+                                    osum = ((endDateMills - startDateMills) / 1000 / 3600 + 1) * sprice;
                                 } else {
                                     tv_order_price.setText((((endDateMills - startDateMills) / 1000 / 3600) * sprice) + "");
                                     tv_sum_price.setText((((endDateMills - startDateMills) / 1000 / 3600) * sprice) + "");
+                                    osum = ((endDateMills - startDateMills) / 1000 / 3600) * sprice;
                                 }
                             } else {
                                 tv_choose_start_date.setText("");
@@ -182,7 +192,8 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
                         dateTime2.minute = minute;
                         tv_choose_end_date.setText(dateTime2.year + "-" + dateTime2.month + "-"
                                 + dateTime2.day + "  " + dateTime2.hour + ":" + dateTime2.minute);
-
+                        oendtime = dateTime2.year + "-" + dateTime2.month + "-"
+                                + dateTime2.day + "  " + dateTime2.hour + ":" + dateTime2.minute;
                         currentMills = System.currentTimeMillis();
                         endDateMills = dateTime2mill(dateTime2.year + "-" + dateTime2.month
                                 + "-" + dateTime2.day + " " + dateTime2.hour + ":" + dateTime2.minute);
@@ -192,8 +203,8 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
                             return;
                         }
                         if (!tv_choose_start_date.getText().toString().trim().equals("") && tv_choose_start_date != null) {
-                            startDateMills = dateTime2mill(dateTime1.year + "-" + dateTime1.month
-                                    + "-" + dateTime1.day + " " + dateTime1.hour + ":" + dateTime1.minute);
+                            ostarttime = dateTime1.year + "-" + dateTime1.month
+                                    + "-" + dateTime1.day + " " + dateTime1.hour + ":" + dateTime1.minute;
                             Log.i(startDateMills + "", endDateMills + " ");
 
                             if (startDateMills < endDateMills) {
@@ -204,9 +215,11 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
                                 if((endDateMills - startDateMills) / 1000 % 3600 != 0){
                                     tv_order_price.setText((((endDateMills - startDateMills) / 1000 / 3600 + 1) * sprice) + "");
                                     tv_sum_price.setText((((endDateMills - startDateMills) / 1000 / 3600 + 1) * sprice) + "");
+                                    osum = ((endDateMills - startDateMills) / 1000 / 3600 + 1) * sprice;
                                 } else {
                                     tv_order_price.setText((((endDateMills - startDateMills) / 1000 / 3600) * sprice) + "");
                                     tv_sum_price.setText((((endDateMills - startDateMills) / 1000 / 3600) * sprice) + "");
+                                    osum = ((endDateMills - startDateMills) / 1000 / 3600) * sprice;
                                 }
                             } else {
                                 tv_choose_end_date.setText("");
@@ -241,21 +254,47 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
                             }
                         })
                         .show();
+                break;
             case R.id.ll_submit:
-                JSONObject jsonObject = new JSONObject();
-                uid = 1;
-                jsonObject.put("uid",uid);
-                jsonObject.put("sid",sid);
-                jsonObject.put("fid",fid);
-                jsonObject.put("opay",payMethod);
-                jsonObject.put("osum",tv_sum_price.getText().toString());
-                jsonObject.put("opay",payMethod);
-                jsonObject.put("opay",payMethod);
+                if(!"".equals(tv_choose_start_date.getText().toString().trim()) && null != tv_choose_start_date.getText().toString().trim()){
+                    JSONObject jsonObject = new JSONObject();
+                    uid = 1;
+                    jsonObject.put("uid",uid);
+                    jsonObject.put("sid",sid);
+                    jsonObject.put("fid",fid);
+                    jsonObject.put("opay",payMethod);
+                    jsonObject.put("osum",osum);
+                    jsonObject.put("ostarttime",ostarttime);
+                    jsonObject.put("oendtime",oendtime);
+                    HttpUtil.doJsonPost(handler, URL.BASE_URL + "api/add/order",jsonObject.toJSONString());
+                } else {
+                    Toast.makeText(PlayTimeActivity.this,"请选择时间！",Toast.LENGTH_SHORT).show();
+                }
 
             default:
                 break;
         }
     }
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = (String) msg.obj;
+            if (result != null && !result.equals("null") && !result.equals("")) {
+                JSONObject jsonObject = JSONObject.parseObject(result);
+                String msg1 = jsonObject.getString("msg");
+                if(jsonObject.getString("status").trim().equals("1")){
+                    String strOid = jsonObject.getString("oid");
+                    int oid = Integer.parseInt(strOid);
+                    Toast.makeText(PlayTimeActivity.this,"下单成功",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(PlayTimeActivity.this,OrderDetailsActivity.class);
+                    intent.putExtra("oid",oid).putExtra("opay",payMethod);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(PlayTimeActivity.this,msg1,Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    };
 
     public long dateTime2mill(String date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");//要转换的日期格式，根据实际调整""里面内容

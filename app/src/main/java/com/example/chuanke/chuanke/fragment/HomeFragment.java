@@ -3,11 +3,14 @@ package com.example.chuanke.chuanke.fragment;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -23,6 +26,7 @@ import com.example.chuanke.chuanke.activity.TemplateActivity;
 import com.example.chuanke.chuanke.base.BaseFragment;
 import com.example.chuanke.chuanke.base.URL;
 import com.example.chuanke.chuanke.bean.AdBean;
+import com.example.chuanke.chuanke.bean.TemplateBean;
 import com.example.chuanke.chuanke.util.GlideImageLoader;
 import com.example.chuanke.chuanke.util.HttpUtil;
 import com.example.chuanke.chuanke.zxing.activity.CaptureActivity;
@@ -33,6 +37,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.example.chuanke.chuanke.component.StatusBar.initImmersionBarOfColorBar;
 
 public class HomeFragment extends BaseFragment {
     private GridView gridView;
@@ -47,22 +53,16 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initSetting() {
-
-        HttpUtil.doJsonPost(handler, URL.BASE_URL+ "api/Lists/advertise","");
-
-//        images.add("http://seopic.699pic.com/photo/00005/5186.jpg_wh1200.jpg");
-//        images.add("http://seopic.699pic.com/photo/50010/0719.jpg_wh1200.jpg");
-//        images.add("http://seopic.699pic.com/photo/50009/9449.jpg_wh1200.jpg");
     }
 
     @Override
     public void initView() {
+//        initImmersionBarOfColorBar(R.color.white, true,this.getActivity());//沉浸式状态栏
+        setTranslucentStatus();
         gridView = findViewById(R.id.gridview);
         iv_scan=findViewById(R.id.iv_fg_home_scan);
         iv_decice=findViewById(R.id.iv_fg_home_decice);
         iv_template=findViewById(R.id.iv_fg_home_template);
-
-        //初始化数据
 
     }
 
@@ -71,10 +71,12 @@ public class HomeFragment extends BaseFragment {
         iv_scan.setOnClickListener(this);
         iv_decice.setOnClickListener(this);
         iv_template.setOnClickListener(this);
+        HttpUtil.doJsonPost(handler, URL.BASE_URL+ "api/Lists/advertise","");
     }
 
     @Override
     public void initData() {
+        HttpUtil.doJsonPost(handlerTemplate, URL.BASE_URL+ "api/Lists/template","");
         //图标
         int icno[] = { R.drawable.cat, R.drawable.cat, R.drawable.cat,
                 R.drawable.cat, R.drawable.cat, R.drawable.cat};
@@ -125,6 +127,19 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
+    Handler handlerTemplate = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            String result = (String) msg.obj;
+            if(result != null) {
+                List<TemplateBean> templateBeans;
+                JSONArray jsonArray = JSONArray.parseArray(result);
+                templateBeans = jsonArray.toJavaList(TemplateBean.class);
+
+            }
+
+        }
+    };
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -148,4 +163,18 @@ public class HomeFragment extends BaseFragment {
 
         }
     };
+
+    protected void setTranslucentStatus() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < 20) {
+
+            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        } else if (Build.VERSION.SDK_INT >= 21) {
+
+            View decorView = getActivity().getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
 }

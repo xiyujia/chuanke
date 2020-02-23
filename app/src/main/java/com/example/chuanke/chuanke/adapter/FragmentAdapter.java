@@ -5,15 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
-/**
-
-* 作者：张恺
-
-* 时间：2019/1/28
-
-* 类描述：首页viewpager Adapter
-
-*/
 
 public class FragmentAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragmentList;

@@ -63,7 +63,8 @@ public class FileChooseActivity extends BaseActivity {
     @Override
     public void initData() {
         Intent intent = getIntent();
-        sid = intent.getIntExtra("sid",-1);
+        String strSid = intent.getStringExtra("sid");
+        sid = Integer.parseInt(strSid);
         sprice = intent.getStringExtra("sprice");
         uid = MyApplication.uid;
         uid = 1;
@@ -127,7 +128,6 @@ public class FileChooseActivity extends BaseActivity {
                     Intent intent1 = new Intent(FileChooseActivity.this,PlayTimeActivity.class);
                     intent1.putExtra("sid",sid).putExtra("fid",fid).putExtra("sprice",sprice);
                     startActivity(intent1);
-                    Toast.makeText(getContext(), "你点击了toufang按钮" + (position + 1), Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     Intent intent = new Intent(getContext(),UploadActivity.class);
