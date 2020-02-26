@@ -29,7 +29,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.UploadActivity"></activity>
+        <activity android:name=".activity.UpdateUserActivity"></activity>
+        <activity android:name=".activity.CollectActivity" />
+        <activity android:name=".activity.TemplateDetailActivity" />
+        <activity android:name=".activity.UploadActivity" />
         <activity android:name=".activity.FileChooseActivity" />
         <activity
             android:name=".activity.PlayTimeActivity"
@@ -62,19 +65,13 @@
         <activity
             android:name=".zxing.activity.ResultActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.DeviceActivity" />
+        <activity android:name=".activity.DeviceListActivity" />
         <activity android:name=".activity.EditFileActivity" />
         <activity
             android:name=".activity.TemplateActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.MyorderActivity" />
-        <activity
-            android:name=".activity.OrderSuccessActivity"
-            android:theme="@style/AppTheme" />
         <activity android:name=".activity.OrderDetailsActivity" />
-        <activity android:name=".activity.NewOrderActivity" />
-        <activity android:name=".activity.SetActivity" />
-        <activity android:name=".activity.TemplateDetailsActivity" />
     </application>
 
 </manifest>

@@ -33,6 +33,7 @@ public class MyorderActivity extends BaseActivity implements CustomListView.ILoa
     private OrderListAdapter orderListAdapter;
     private CustomListView recyclerView;
     private TabLayout tab_layout;
+    private TextView tv_null;
 
     private int playState = -1;//待播放0，正在播放1，播放完成2
     private int payState = 0;//待付款0，已取消2
@@ -52,18 +53,11 @@ public class MyorderActivity extends BaseActivity implements CustomListView.ILoa
         topBar.setText("我的订单");
         recyclerView = findViewById(R.id.rv_myorder_list);
         tab_layout = findViewById(R.id.tab_layout);
+        tv_null = findViewById(R.id.tv_null);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
-        params.put("uid",MyApplication.uid);
-        params.put("uid",1);
+        params.put("uid", MyApplication.uid);
         initTabLayout();
-//        for (int i=0;i<20;i++){
-//            OrderBean bean=new OrderBean();
-//            bean.setOendtime("文件"+i);
-//            orderList.add(bean);
-//        }
-//        adapter=new OrderListAdapter(MyorderActivity.this,orderList);
-//        recyclerView.setAdapter(adapter);
     }
 
 
@@ -87,7 +81,7 @@ public class MyorderActivity extends BaseActivity implements CustomListView.ILoa
                 payState = 0;
                 params.put("opaystate", payState);
                 params.remove("oplaystate");
-                HttpUtil.doJsonPost(handlerOrderList, URL.BASE_URL+url, JSONObject.toJSONString(params));
+                HttpUtil.doJsonPost(handlerOrderList, URL.BASE_URL + url, JSONObject.toJSONString(params));
             }
             tab.setCustomView(view);
             tab_layout.addTab(tab);
@@ -101,7 +95,7 @@ public class MyorderActivity extends BaseActivity implements CustomListView.ILoa
                 tv_title.setBackgroundResource(R.drawable.message_type_selected);
 
                 setSupply();
-                HttpUtil.doJsonPost(handlerOrderList, URL.BASE_URL+url, JSONObject.toJSONString(params));
+                HttpUtil.doJsonPost(handlerOrderList, URL.BASE_URL + url, JSONObject.toJSONString(params));
             }
 
             @Override
@@ -117,6 +111,7 @@ public class MyorderActivity extends BaseActivity implements CustomListView.ILoa
             }
         });
     }
+
     private void setSupply() {
         if (tab_layout.getSelectedTabPosition() == 0) {
             payState = 0;
@@ -153,12 +148,20 @@ public class MyorderActivity extends BaseActivity implements CustomListView.ILoa
             String result = (String) msg.obj;
             if (result != null) {
                 JSONArray item = JSONArray.parseArray(result);
-                orderList.clear();
-                orderList = item.toJavaList(OrderBean.class);
+                if(item.size() != 0){
+                    recyclerView.setVisibility(View.VISIBLE);
+                    tv_null.setVisibility(View.GONE);
+                    orderList.clear();
+                    orderList = item.toJavaList(OrderBean.class);
 
-                orderListAdapter = new OrderListAdapter(MyorderActivity.this, orderList);
-                recyclerView.setAdapter(orderListAdapter);
-                recyclerView.deferNotifyDataSetChanged();
+                    orderListAdapter = new OrderListAdapter(MyorderActivity.this, orderList);
+                    recyclerView.setAdapter(orderListAdapter);
+                    recyclerView.deferNotifyDataSetChanged();
+                } else {
+                    tv_null.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
+
             }
         }
     };

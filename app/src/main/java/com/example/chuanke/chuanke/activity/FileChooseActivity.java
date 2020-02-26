@@ -67,16 +67,15 @@ public class FileChooseActivity extends BaseActivity {
         sid = Integer.parseInt(strSid);
         sprice = intent.getStringExtra("sprice");
         uid = MyApplication.uid;
-        uid = 1;
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("uid", uid);
         HttpUtil.doJsonPost(handler, URL.BASE_URL + "api/Lists/file", jsonObject.toJSONString());
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(),UploadActivity.class);
-                intent.putExtra("oprateType","add")
-                        .putExtra("sid",sid).putExtra("sprice",sprice);
+                Intent intent = new Intent(getContext(), UploadActivity.class);
+                intent.putExtra("oprateType", "add")
+                        .putExtra("sid", sid).putExtra("sprice", sprice);
                 startActivity(intent);
             }
         });
@@ -117,23 +116,23 @@ public class FileChooseActivity extends BaseActivity {
             //viewName可区分item及item内部控件
             fid = filesList.get(position).getFid();
             switch (v.getId()) {
-                case R.id.tv_file_delete:
+                case R.id.tv_file_delete://删除
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("uid", uid);
                     jsonObject.put("fid", fid);
                     HttpUtil.doJsonPost(handlerDelete, URL.BASE_URL + "api/delete/file", jsonObject.toJSONString());
                     tempDelPosition = position;
                     break;
-                case R.id.tv_file_put:
-                    Intent intent1 = new Intent(FileChooseActivity.this,PlayTimeActivity.class);
-                    intent1.putExtra("sid",sid).putExtra("fid",fid).putExtra("sprice",sprice);
+                case R.id.tv_file_put://投放按钮
+                    Intent intent1 = new Intent(FileChooseActivity.this, PlayTimeActivity.class);
+                    intent1.putExtra("sid", sid).putExtra("fid", fid).putExtra("sprice", sprice);
                     startActivity(intent1);
                     break;
                 default:
-                    Intent intent = new Intent(getContext(),UploadActivity.class);
-                    intent.putExtra("fid",fid);
-                    intent.putExtra("oprateType","update")
-                            .putExtra("sid",sid).putExtra("sprice",sprice);
+                    Intent intent = new Intent(getContext(), UploadActivity.class);
+                    intent.putExtra("fid", fid);
+                    intent.putExtra("oprateType", "update")
+                            .putExtra("sid", sid).putExtra("sprice", sprice);
                     startActivity(intent);
                     break;
             }
@@ -162,7 +161,6 @@ public class FileChooseActivity extends BaseActivity {
     public void onResume() {
         super.onResume();
         uid = MyApplication.uid;
-        uid = 1;
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("uid", uid);
         HttpUtil.doJsonPost(handler, URL.BASE_URL + "api/Lists/file", jsonObject.toJSONString());

@@ -172,23 +172,23 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.iv_save:
                 if(fid ==-1){
-                    if(null != lastImg && !et_title.getText().toString().trim().equals("")){
+                    if(null != tempImg && !et_title.getText().toString().trim().equals("")){
                         new Thread(new Runnable() {  //开启线程上传文件
                             @Override
                             public void run() {
                                 url = URL.BASE_URL+"api/add/file";
-                                uploadOk(lastImg);
+                                uploadOk(tempImg);
                             }
                         }).start();
                     }
 
                 } else {
-                    if(null != lastImg && !et_title.getText().toString().trim().equals("")) {
+                    if(null != tempImg && !et_title.getText().toString().trim().equals("")) {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 url = URL.BASE_URL + "api/update/file";
-                                uploadOk(lastImg);
+                                uploadOk(tempImg);
                             }
                         }).start();
                     } else {
@@ -274,7 +274,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                             e.printStackTrace();
                         }
                         //调用裁剪，有点问题：裁剪完成后响应参数intent无值
-//                        startPhotoZoom(data.getData(),500);
+                        startPhotoZoom(data.getData(),500);
 
                         //把定义的最终文件赋值并显示出来。
                         lastImg = file;
@@ -289,17 +289,16 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                         File file = new File(getExternalCacheDir(), System.currentTimeMillis() + ".jpg");
                         Bitmap map = null;
                         try {
-                            map = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                            map = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.fromFile(tempImg));
                             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-                            map.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+//                            map.compress(Bitmap.CompressFormat.JPEG, 80, bos);
                             bos.flush();
                             bos.close();
                             lastImg = file;
-                            iv_upload.setImageBitmap(map);
-
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        iv_upload.setImageBitmap(map);
                     }
                     break;
                 default:
@@ -395,7 +394,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
 //                .addFormDataPart("key", "img")//文件在服务器中保存的文件夹路径
 //                .addFormDataPart("file", file.getName(), requestBody)//包含文件名字和内容
                 .addFormDataPart("fpic", file.getName(), requestBody)//包含文件名字和内容,此处文件名必须用file.getName()
-                .addFormDataPart("uid","1")
+                .addFormDataPart("uid",MyApplication.uid+"")
                 .addFormDataPart("fid",fid+"")
                 .addFormDataPart("fname",et_title.getText().toString().trim())
                 .build();
@@ -524,6 +523,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
 //                takeCamera(RESULT_CAMERA_IMAGE);
+                camera();
                 popupWindow.dismiss();
 
             }

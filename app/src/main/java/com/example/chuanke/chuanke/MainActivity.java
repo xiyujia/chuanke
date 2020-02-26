@@ -7,9 +7,7 @@ import com.example.chuanke.chuanke.activity.ForgetActivity;
 import com.example.chuanke.chuanke.activity.HomeActivity;
 import com.example.chuanke.chuanke.activity.LoginActivity;
 import com.example.chuanke.chuanke.activity.MyorderActivity;
-import com.example.chuanke.chuanke.activity.NewOrderActivity;
 import com.example.chuanke.chuanke.activity.OrderDetailsActivity;
-import com.example.chuanke.chuanke.activity.OrderSuccessActivity;
 import com.example.chuanke.chuanke.activity.PersonalActivity;
 import com.example.chuanke.chuanke.activity.RegActivity;
 import com.example.chuanke.chuanke.activity.TemplateActivity;
@@ -107,14 +105,8 @@ public class MainActivity extends BaseActivity {
             case R.id.myorder:
                 startActivity(MyorderActivity.class);
                 break;
-            case R.id.orderSuccess:
-                startActivity(OrderSuccessActivity.class);
-                break;
             case R.id.orderDetails:
                 startActivity(OrderDetailsActivity.class);
-                break;
-            case R.id.orderNew:
-                startActivity(NewOrderActivity.class);
                 break;
             }
     }

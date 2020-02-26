@@ -1,59 +1,32 @@
 package com.example.chuanke.chuanke.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.ColorRes;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.chuanke.chuanke.R;
-import com.example.chuanke.chuanke.activity.DeviceActivity;
-import com.example.chuanke.chuanke.activity.EditFileActivity;
-import com.example.chuanke.chuanke.activity.FileChooseActivity;
-import com.example.chuanke.chuanke.activity.PlayTimeActivity;
+import com.example.chuanke.chuanke.activity.DeviceListActivity;
 import com.example.chuanke.chuanke.activity.UploadActivity;
 import com.example.chuanke.chuanke.adapter.FileFragmentListAdapter;
 import com.example.chuanke.chuanke.base.BaseFragment;
 import com.example.chuanke.chuanke.base.MyApplication;
 import com.example.chuanke.chuanke.base.URL;
 import com.example.chuanke.chuanke.bean.FileBean;
-import com.example.chuanke.chuanke.util.GlideImageLoader;
 import com.example.chuanke.chuanke.util.HttpUtil;
-import com.gyf.barlibrary.ImmersionBar;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-
-import static android.widget.LinearLayout.HORIZONTAL;
-import static com.example.chuanke.chuanke.component.StatusBar.initImmersionBarForTopBar;
-import static com.example.chuanke.chuanke.component.StatusBar.initImmersionBarOfColorBar;
-import static com.example.chuanke.chuanke.component.StatusBar.setTranslucentStatus;
-import static com.youth.banner.BannerConfig.PADDING_SIZE;
 
 public class FileFragment extends BaseFragment {
     private List<FileBean> filesList = new ArrayList<>();
@@ -105,7 +78,6 @@ public class FileFragment extends BaseFragment {
     @Override
     public void initEvent() {
         uid = MyApplication.uid;
-        uid = 1;
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("uid", uid);
         HttpUtil.doJsonPost(handler, URL.BASE_URL + "api/Lists/file", jsonObject.toJSONString());
@@ -139,17 +111,17 @@ public class FileFragment extends BaseFragment {
         @Override
         public void onItemClick(View v, FileFragmentListAdapter.ViewName viewName, int position) {
             //viewName可区分item及item内部控件
+            fid = filesList.get(position).getFid();
             switch (v.getId()) {
                 case R.id.tv_file_delete:
                     JSONObject jsonObject = new JSONObject();
-                    fid = filesList.get(position).getFid();
                     jsonObject.put("uid", uid);
                     jsonObject.put("fid", fid);
                     HttpUtil.doJsonPost(handlerDelete, URL.BASE_URL + "api/delete/file", jsonObject.toJSONString());
                     tempDelPosition = position;
                     break;
                 case R.id.tv_file_put:
-                    Intent intent1 = new Intent(getContext(), DeviceActivity.class);
+                    Intent intent1 = new Intent(getContext(), DeviceListActivity.class);
                     intent1.putExtra("fid",fid);
                     startActivity(intent1);
                     break;

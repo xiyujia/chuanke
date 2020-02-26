@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.DeviceActivity">
+    tools:context=".activity.DeviceListActivity">
 
 
     <com.amap.api.maps2d.MapView
@@ -49,15 +49,44 @@
     <RelativeLayout
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
-
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/color_116"
+            android:layout_height="0.5dp"/>
+        <LinearLayout
+            android:id="@+id/ll_up_down"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_up_down"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="点击关闭设备列表"/>
+            <ImageView
+                android:id="@+id/iv_up_down"
+                android:layout_width="15dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/down"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
+            android:background="@color/color_116"
+            android:layout_height="0.5dp"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_marginTop="30.5dp"
+            android:layout_height="350dp">
 
         </android.support.v7.widget.RecyclerView>
 

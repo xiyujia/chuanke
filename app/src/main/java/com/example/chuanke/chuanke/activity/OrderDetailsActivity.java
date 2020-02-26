@@ -91,7 +91,6 @@ public class OrderDetailsActivity extends BaseActivity {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("oid", oid);
         jsonObject.put("uid", MyApplication.uid);
-        jsonObject.put("uid", 1);
         HttpUtil.doJsonPost(handler, orderDetailUrl, jsonObject.toJSONString());
     }
 
@@ -184,7 +183,6 @@ public class OrderDetailsActivity extends BaseActivity {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("oid", oid);
                     jsonObject.put("uid", MyApplication.uid);
-                    jsonObject.put("uid", 1);
                     HttpUtil.doJsonPost(handler, orderDetailUrl, jsonObject.toJSONString());
                 } else {
                     Toast.makeText(OrderDetailsActivity.this,"出错了！稍后再试吧！",Toast.LENGTH_SHORT).show();

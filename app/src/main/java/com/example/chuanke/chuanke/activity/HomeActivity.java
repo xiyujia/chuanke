@@ -22,6 +22,7 @@ import static com.example.chuanke.chuanke.component.StatusBar.initImmersionBarOf
 
 public class HomeActivity extends BaseActivity {
 
+    public static HomeActivity instance;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
     private TabLayout tabLayout;
@@ -36,6 +37,7 @@ public class HomeActivity extends BaseActivity {
     public void initView() {
         tabLayout=findViewById(R.id.tab);
         topBarEnable=false;
+        instance = this;
     }
 
     @Override

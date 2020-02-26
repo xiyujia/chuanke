@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.chuanke.chuanke.R;
 import com.example.chuanke.chuanke.activity.OrderDetailsActivity;
+import com.example.chuanke.chuanke.activity.TemplateDetailActivity;
 import com.example.chuanke.chuanke.activity.UploadActivity;
 import com.example.chuanke.chuanke.base.URL;
 import com.example.chuanke.chuanke.bean.OrderBean;
@@ -30,8 +31,6 @@ public class HomeTemplateAdapter extends BaseAdapter {
     private List<TemplateBean> templateBeans;
     private Activity activity;
     private TemplateList holder = null;
-//    private ImageLoader imageLoader;
-//    private DisplayImageOptions options ;
 
     public HomeTemplateAdapter(Activity activity, List<TemplateBean> templateBeans) {
         this.templateBeans = templateBeans;
@@ -70,18 +69,16 @@ public class HomeTemplateAdapter extends BaseAdapter {
         final TemplateBean templateBean = templateBeans.get(i);
         String picUrl = URL.BASE_TEMPLATE_PIC_URL+ templateBean.getTpic();
         holder.imgOffer.setImageURI(picUrl);
-
+        holder.textView.setText(templateBean.getTname());
         holder.ll_item_whole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, UploadActivity.class);
+                Intent intent = new Intent(activity, TemplateDetailActivity.class);
                 intent.putExtra("tid",templateBean.getTid());
                 view.getContext().startActivity(intent);
 
             }
         });
-
-
         return view;
     }
 

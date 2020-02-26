@@ -20,6 +20,14 @@
         app:tabSelectedTextColor="@color/black"
         app:tabTextColor="@color/gray"
         app:tabGravity="fill"/>
+    <TextView
+        android:id="@+id/tv_null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp"
+        android:text="- - - - -暂时没有订单- - - - -"
+        android:visibility="gone"
+        android:layout_gravity="center"/>
     <com.example.chuanke.chuanke.util.CustomListView
         android:id="@+id/rv_myorder_list"
         android:layout_width="match_parent"

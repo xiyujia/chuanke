@@ -23,7 +23,7 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
 public class MyApplication extends Application {
 
-    public static int uid;
+    public static int uid=1;
 
     @Override
     public void onCreate() {

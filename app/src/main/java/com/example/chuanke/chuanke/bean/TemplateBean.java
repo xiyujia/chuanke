@@ -11,6 +11,16 @@ public class TemplateBean {
     private int tusenum;
     private String tpic;
 
+    private int colletState;
+
+    public void setColletState(int colletState) {
+        this.colletState = colletState;
+    }
+
+    public int getColletState() {
+        return colletState;
+    }
+
     public String getTpic() {
         return tpic;
     }

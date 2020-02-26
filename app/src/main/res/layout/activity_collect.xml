@@ -4,8 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context=".activity.HomeActivity">
+    tools:context=".activity.CollectActivity">
+    <TextView
+        android:id="@+id/tv_null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:gravity="center"
+        android:text="-------一个都没有-------"/>
 
     <GridView
         android:id="@+id/gridview"
@@ -15,5 +25,4 @@
         android:stretchMode="spacingWidthUniform"
         android:numColumns="2"
         />
-
 </LinearLayout>

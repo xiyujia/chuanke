@@ -106,7 +106,7 @@ public class DeviceDetailActivity extends BaseActivity {
                 } else {
                     hangye.setText("设备状态：正在播放");
                 }
-                price.setText("￥"+screenDetailBean.getSprice()+"/秒");
+                price.setText("￥"+screenDetailBean.getSprice()+"/h");
                 address.setText("地址："+screenDetailBean.getSplace());
                 fenbianlv.setText("分辨率："+screenDetailBean.getSresolution());
                 screensize.setText("屏幕尺寸：" + screenDetailBean.getSratio()+ "寸");

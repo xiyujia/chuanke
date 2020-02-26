@@ -258,7 +258,6 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
             case R.id.ll_submit:
                 if(!"".equals(tv_choose_start_date.getText().toString().trim()) && null != tv_choose_start_date.getText().toString().trim()){
                     JSONObject jsonObject = new JSONObject();
-                    uid = 1;
                     jsonObject.put("uid",uid);
                     jsonObject.put("sid",sid);
                     jsonObject.put("fid",fid);

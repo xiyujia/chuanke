@@ -6,8 +6,26 @@ public class ScreenDetailBean {
     private String sresolution;
     private String spic;
     private String sprice;
-
+    private String slongitude;
+    private String slatitude;
     private int sstate;
+
+
+    public String getSlongitude() {
+        return slongitude;
+    }
+
+    public void setSlongitude(String slongitude) {
+        this.slongitude = slongitude;
+    }
+
+    public String getSlatitude() {
+        return slatitude;
+    }
+
+    public void setSlatitude(String slatitude) {
+        this.slatitude = slatitude;
+    }
 
     public int getSstate() {
         return sstate;

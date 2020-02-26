@@ -10,6 +10,7 @@ public class URL {
     public static final String BASE_FILE_PIC_URL = "http://39.102.40.194/chuanke/public/static/Fileimages/";
     public static final String BASE_ORDER_PIC_URL = "http://39.102.40.194/chuanke/public/static/Orderimages/";
     public static final String BASE_TEMPLATE_PIC_URL = "http://39.102.40.194/chuanke/public/static/Templateimages/";
+    public static final String BASE_USER_PIC_URL = "http://39.102.40.194/chuanke/public/static/Userimages/";
 
     //登录
     public static final String login = "api/User/login";
