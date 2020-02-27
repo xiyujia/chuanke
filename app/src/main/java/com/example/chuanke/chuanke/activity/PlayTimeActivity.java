@@ -128,14 +128,14 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
                         dateTime1.month = monthOfYear + 1;
                         dateTime1.day = dayOfMonth;
                         dateTime1.hour = hourOfDay;
-                        dateTime1.minute = minute;
+                        dateTime1.minute = 0;
                         tv_choose_start_date.setText(dateTime1.year + "-" + dateTime1.month + "-"
-                                + dateTime1.day + "  " + dateTime1.hour + ":" + dateTime1.minute);
+                                + dateTime1.day + "  " + (dateTime1.hour<=9 ? ("0"+dateTime1.hour) : dateTime1.hour)  + ":00");
                         ostarttime = dateTime1.year + "-" + dateTime1.month + "-"
                                 + dateTime1.day + "  " + dateTime1.hour + ":" + dateTime1.minute;
                         currentMills = System.currentTimeMillis();
                         startDateMills = dateTime2mill(dateTime1.year + "-" + dateTime1.month
-                                + "-" + dateTime1.day + " " + dateTime1.hour + ":" + dateTime1.minute);
+                                + "-" + dateTime1.day + " " + dateTime1.hour + ":00");
                         if(currentMills >= startDateMills){
                             tv_choose_start_date.setText("");
                             Toast.makeText(PlayTimeActivity.this, "开始时间不能早于当前时间！", Toast.LENGTH_SHORT).show();
@@ -143,13 +143,13 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
                         }
                         if (!tv_choose_end_date.getText().toString().trim().equals("") && tv_choose_end_date != null) {
                             endDateMills = dateTime2mill(dateTime2.year + "-" + dateTime2.month
-                                    + "-" + dateTime2.day + " " + dateTime2.hour + ":" + dateTime2.minute);
+                                    + "-" + dateTime2.day + " " + dateTime2.hour + ":00");
                             Log.i(startDateMills + "", endDateMills + " ");
 
                             if (startDateMills < endDateMills && currentMills < startDateMills) {
-                                if (endDateMills - startDateMills < 3600 * 1000) {
-                                    Toast.makeText(PlayTimeActivity.this, "不足一小时按一小时计算！", Toast.LENGTH_SHORT).show();
-                                }
+//                                if (endDateMills - startDateMills < 3600 * 1000) {
+//                                    Toast.makeText(PlayTimeActivity.this, "不足一小时按一小时计算！", Toast.LENGTH_SHORT).show();
+//                                }
                                 tv_play_times.setText((((endDateMills - startDateMills) / 1000 / 90 ) +1) + "次");
                                 if((endDateMills - startDateMills) / 1000 % 3600 != 0){
                                     tv_order_price.setText((((endDateMills - startDateMills) / 1000 / 3600 + 1) * sprice) + "");
@@ -189,17 +189,17 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
                         dateTime2.month = monthOfYear + 1;
                         dateTime2.day = dayOfMonth;
                         dateTime2.hour = hourOfDay;
-                        dateTime2.minute = minute;
+                        dateTime2.minute = 0;
                         tv_choose_end_date.setText(dateTime2.year + "-" + dateTime2.month + "-"
-                                + dateTime2.day + "  " + dateTime2.hour + ":" + dateTime2.minute);
+                                + dateTime2.day + "  " + (dateTime2.hour<=9 ? ("0"+dateTime2.hour) : dateTime2.hour) + ":00");
                         oendtime = dateTime2.year + "-" + dateTime2.month + "-"
                                 + dateTime2.day + "  " + dateTime2.hour + ":" + dateTime2.minute;
                         currentMills = System.currentTimeMillis();
                         endDateMills = dateTime2mill(dateTime2.year + "-" + dateTime2.month
-                                + "-" + dateTime2.day + " " + dateTime2.hour + ":" + dateTime2.minute);
+                                + "-" + dateTime2.day + " " + dateTime2.hour + ":00");
                         if(currentMills >= endDateMills){
                             tv_choose_end_date.setText("");
-                            Toast.makeText(PlayTimeActivity.this, "结束时间不能早于当前时间！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PlayTimeActivity.this, "结束时间要在开始时间一小时之后", Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (!tv_choose_start_date.getText().toString().trim().equals("") && tv_choose_start_date != null) {
@@ -208,9 +208,9 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
                             Log.i(startDateMills + "", endDateMills + " ");
 
                             if (startDateMills < endDateMills) {
-                                if (endDateMills - startDateMills < 3600 * 1000) {
-                                    Toast.makeText(PlayTimeActivity.this, "不足一小时按一小时计算！", Toast.LENGTH_SHORT).show();
-                                }
+//                                if (endDateMills - startDateMills < 3600 * 1000) {
+//                                    Toast.makeText(PlayTimeActivity.this, "不足一小时按一小时计算！", Toast.LENGTH_SHORT).show();
+//                                }
                                 tv_play_times.setText((((endDateMills - startDateMills) / 1000 / 90 ) +1) + "次");
                                 if((endDateMills - startDateMills) / 1000 % 3600 != 0){
                                     tv_order_price.setText((((endDateMills - startDateMills) / 1000 / 3600 + 1) * sprice) + "");

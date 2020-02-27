@@ -47,7 +47,7 @@ public class DateTimePickDialog implements OnDateChangedListener,
         tp = (TimePicker) view.findViewById(R.id.timepicker);
         dp.init(year, monthOfYear, dayOfMonth, this);
         tp.setCurrentHour(hourOfDay);
-        tp.setCurrentMinute(minute);
+        tp.setCurrentMinute(0);
         tp.setOnTimeChangedListener(this);
         AlertDialog.Builder b = new AlertDialog.Builder(mContext);
         b.setTitle("请选择时间");

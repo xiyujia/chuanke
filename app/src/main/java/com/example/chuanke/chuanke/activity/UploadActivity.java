@@ -274,7 +274,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                             e.printStackTrace();
                         }
                         //调用裁剪，有点问题：裁剪完成后响应参数intent无值
-                        startPhotoZoom(data.getData(),500);
+//                        startPhotoZoom(data.getData(),500);
 
                         //把定义的最终文件赋值并显示出来。
                         lastImg = file;

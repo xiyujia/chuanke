@@ -1,6 +1,7 @@
 package com.example.chuanke.chuanke.activity;
 
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -143,6 +144,13 @@ public class LoginActivity extends BaseActivity {
                 } else if (password.length() < 6) {
                     showToast("密码长度不能少于6位！");
                 }else {
+                    btn_login.setEnabled(false);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            btn_login.setEnabled(true);
+                        }
+                    }, 5000);// 5000毫秒执行，5秒
                     new LoginModel().login(mobile,password, new BaseListener<LoginBean>() {
                         @Override
                         public void onResponse(LoginBean loginBean) {

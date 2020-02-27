@@ -65,6 +65,13 @@ public class FileFragment extends BaseFragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                floatingActionButton.setEnabled(false);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        floatingActionButton.setEnabled(true);
+                    }
+                }, 1000);// 1000毫秒执行，1秒
                 Intent intent = new Intent(getContext(),UploadActivity.class);
                 intent.putExtra("oprateType","add");
                 startActivity(intent);

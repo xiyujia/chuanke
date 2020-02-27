@@ -18,5 +18,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:timePickerMode="spinner" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="* 最小以小时为单位，设置分钟都按0处理"
+        android:textColor="@color/message_type_selected_end"
+        android:textSize="10dp"/>
 
 </LinearLayout>
