@@ -211,7 +211,6 @@ public class OrderDetailsActivity extends BaseActivity {
 
                 JSONObject jsonObject = new JSONObject();
                 int uid = MyApplication.uid;
-                uid = 1;
                 jsonObject.put("uid",uid);
                 jsonObject.put("oid",oid);
                 jsonObject.put("opay",opay);

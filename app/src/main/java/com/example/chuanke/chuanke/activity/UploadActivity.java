@@ -100,6 +100,8 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
     private int fid=-1;//是否带设备类型：-1不带，否则带
     private boolean isSaveSuccess;//是否带设备类型：-1不带，否则带
 
+    private int btnType;//按钮类型：1是保存按钮，2是发布按钮。
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,6 +173,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_save:
+                btnType = 1;
                 if(fid ==-1){
                     if(null != tempImg && !et_title.getText().toString().trim().equals("")){
                         new Thread(new Runnable() {  //开启线程上传文件
@@ -200,6 +203,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.ll_submit:
+                btnType = 2;
                 if(fid ==-1){
                     if(null != lastImg && !et_title.getText().toString().trim().equals("")){
                         new Thread(new Runnable() {  //开启线程上传文件
@@ -207,10 +211,6 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                             public void run() {
                                 url = URL.BASE_URL+"api/add/file";
                                 uploadOk(lastImg);
-                                if(isSaveSuccess){
-                                    Intent intent = new Intent();
-                                    intent.putExtra("fid",fid);
-                                }
                             }
                         }).start();
                     }
@@ -266,7 +266,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                         try {
                             map = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
                             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-                            map.compress(Bitmap.CompressFormat.JPEG, 10, bos);
+                            map.compress(Bitmap.CompressFormat.JPEG, 80, bos);
                             bos.flush();
                             bos.close();
                             tempImg = file;
@@ -418,18 +418,35 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void run() {
 
-                        if(result != null && !result.equals("null") && !result.equals("")){
-                            JSONObject jsonObject = JSONObject.parseObject(result);
-                            int status = jsonObject.getIntValue("status");
-                            if (status == 1) {
-                                fid = jsonObject.getIntValue("fid");
-                                isSaveSuccess = true;
-                                Toast.makeText(getApplicationContext(),"保存成功！", Toast.LENGTH_SHORT).show();
-                            } else {
-                                isSaveSuccess = false;
-                                Toast.makeText(getApplicationContext(), "保存失败！请稍后再试！", Toast.LENGTH_SHORT).show();
+                        try{
+                            if(result != null && !result.equals("null") && !result.equals("")){
+                                JSONObject jsonObject = JSONObject.parseObject(result);
+                                int status = jsonObject.getIntValue("status");
+                                if (status == 1) {
+                                    fid = jsonObject.getIntValue("fid");
+                                    isSaveSuccess = true;
+                                    Toast.makeText(getApplicationContext(),"保存成功！", Toast.LENGTH_SHORT).show();
+                                    if(btnType == 2){
+                                        Intent intent;
+                                        if(sid == -1){
+                                            intent = new Intent(UploadActivity.this,DeviceListActivity.class);
+                                        } else {
+                                            intent = new Intent(UploadActivity.this,PlayTimeActivity.class);
+                                            intent.putExtra("sid",sid);
+                                        }
+                                        intent.putExtra("fid",fid);
+                                        startActivity(intent);
+                                    }
+                                } else {
+                                    isSaveSuccess = false;
+                                    Toast.makeText(getApplicationContext(), "保存失败！请稍后再试！", Toast.LENGTH_SHORT).show();
+                                }
                             }
+                        } catch (Exception e){
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "保存失败!后台出错了！", Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 });
             }

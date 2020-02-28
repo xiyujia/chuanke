@@ -201,6 +201,8 @@ public class RegActivity extends BaseActivity {
                     showToast("请填写正确的手机号码");
                 }else if(!(pwd.equals(pwd1))){
                     showToast("两次输入密码不一致");
+                } else if (pwd.length() < 6) {
+                    showToast("密码长度不能少于6位！");
                 }else {
                     new RegModel().reg(name, phone, pwd, new BaseListener<RegBean>() {
                         @Override

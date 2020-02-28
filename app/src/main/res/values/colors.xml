@@ -13,6 +13,7 @@
     <color name="message_type_selected_start">#ff883b</color>
     <color name="message_type_selected_end">#f95543</color>
     <color name="order_title">#8895C5</color>
+    <color name="background_color">#dedede</color>
     <color name="green">#85E266</color>
 
     <color name="color_100">#222222</color>

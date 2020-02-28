@@ -192,16 +192,22 @@ public class PersonalActivity extends BaseActivity {
                     public void run() {
 
                         if(result != null && !result.equals("null") && !result.equals("")){
-                            JSONObject jsonObject = JSONObject.parseObject(result);
-                            int status = jsonObject.getIntValue("status");
-                            if (status == 1) {
-                                isSaveSuccess = true;
-                                Toast.makeText(getApplicationContext(),"保存成功！", Toast.LENGTH_SHORT).show();
-                                initEvent();
-                            } else {
-                                isSaveSuccess = false;
-                                Toast.makeText(getApplicationContext(), "保存失败！请稍后再试！", Toast.LENGTH_SHORT).show();
+                            try{
+                                JSONObject jsonObject = JSONObject.parseObject(result);
+                                int status = jsonObject.getIntValue("status");
+                                if (status == 1) {
+                                    isSaveSuccess = true;
+                                    Toast.makeText(getApplicationContext(),"保存成功！", Toast.LENGTH_SHORT).show();
+                                    initEvent();
+                                } else {
+                                    isSaveSuccess = false;
+                                    Toast.makeText(getApplicationContext(), "保存失败！请稍后再试！", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e){
+                                e.printStackTrace();
+                                Toast.makeText(getApplicationContext(), "保存失败!后台出错了！", Toast.LENGTH_SHORT).show();
                             }
+
                         }
                     }
                 });

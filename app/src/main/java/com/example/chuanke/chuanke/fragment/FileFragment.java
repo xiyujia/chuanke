@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
@@ -36,6 +37,7 @@ public class FileFragment extends BaseFragment {
     private RelativeLayout topbar_root;
 
     private GridLayoutManager gridLayoutManager;
+    private TextView tv_null;
 
     int uid;
     String sid;
@@ -61,6 +63,7 @@ public class FileFragment extends BaseFragment {
         setTranslucentStatus();
         floatingActionButton = findViewById(R.id.floatbutton);
         recyclerView = findViewById(R.id.rv_file_fragment);
+        tv_null = findViewById(R.id.tv_null);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,14 +100,21 @@ public class FileFragment extends BaseFragment {
             if (result != null) {
                 JSONArray item = JSONArray.parseArray(result);
 //        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
-                filesList = item.toJavaList(FileBean.class);
-                gridLayoutManager = new GridLayoutManager(getContext(), 1);
-                recyclerView.setLayoutManager(gridLayoutManager);
+                if(item.size() != 0){
+                    recyclerView.setVisibility(View.VISIBLE);
+                    tv_null.setVisibility(View.GONE);
+                    filesList = item.toJavaList(FileBean.class);
+                    gridLayoutManager = new GridLayoutManager(getContext(), 1);
+                    recyclerView.setLayoutManager(gridLayoutManager);
 
-                adapter = new FileFragmentListAdapter(getActivity(), filesList);
-                recyclerView.setAdapter(adapter);
-                // 设置item及item中控件的点击事件
-                adapter.setOnItemClickListener(MyItemClickListener);
+                    adapter = new FileFragmentListAdapter(getActivity(), filesList);
+                    recyclerView.setAdapter(adapter);
+                    // 设置item及item中控件的点击事件
+                    adapter.setOnItemClickListener(MyItemClickListener);
+                } else {
+                    tv_null.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
 
             }
         }
@@ -165,7 +175,6 @@ public class FileFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         uid = MyApplication.uid;
-        uid = 1;
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("uid", uid);
         HttpUtil.doJsonPost(handler, URL.BASE_URL + "api/Lists/file", jsonObject.toJSONString());

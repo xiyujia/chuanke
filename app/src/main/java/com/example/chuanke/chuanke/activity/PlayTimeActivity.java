@@ -19,8 +19,12 @@ import com.example.chuanke.chuanke.R;
 import com.example.chuanke.chuanke.base.BaseActivity;
 import com.example.chuanke.chuanke.base.MyApplication;
 import com.example.chuanke.chuanke.base.URL;
+import com.example.chuanke.chuanke.bean.ScreenDetailBean;
 import com.example.chuanke.chuanke.component.DateTimePickDialog;
 import com.example.chuanke.chuanke.util.HttpUtil;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,6 +62,7 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
     private double osum = 1;
     private String ostarttime ;
     private String oendtime ;
+    private ScreenDetailBean screenDetailBean ;
 
     @Override
     public int getLayoutFile() {
@@ -95,12 +100,24 @@ public class PlayTimeActivity extends BaseActivity implements View.OnClickListen
         sid = intent.getIntExtra("sid",-1);
         fid = intent.getIntExtra("fid",-1);
         String strPrice = intent.getStringExtra("sprice");
-        if(null != strPrice && !"".equals(strPrice)){
-            sprice = Double.parseDouble(strPrice);
-
-        }
-        tv_one_price.setText("￥" + sprice + "/小时");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sid", sid);
+        HttpUtil.doJsonPost(handlerDevice, URL.BASE_URL + "api/Lists/screen", jsonObject.toJSONString());
     }
+    Handler handlerDevice = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = (String) msg.obj;
+            if (result != null && !result.equals("null") && !result.equals("")) {
+                JSONObject jsonObject = JSONObject.parseObject(result);
+                screenDetailBean = jsonObject.toJavaObject(ScreenDetailBean.class);
+                sprice = Double.parseDouble(screenDetailBean.getSprice());
+                tv_one_price.setText("￥" + sprice + "/小时");
+            } else {
+
+            }
+        }
+    };
 
     @Override
     protected void initSetting() {

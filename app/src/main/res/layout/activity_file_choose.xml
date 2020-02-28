@@ -14,7 +14,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
+            <TextView
+                android:id="@+id/tv_null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="50dp"
+                android:text="- - - - -一个文件都没有，新建一个吧- - - - -"
+                android:visibility="gone"
+                android:layout_gravity="center"/>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_file_fragment"
                 android:layout_width="match_parent"

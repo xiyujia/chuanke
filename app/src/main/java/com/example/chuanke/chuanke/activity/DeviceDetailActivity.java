@@ -27,6 +27,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 public class DeviceDetailActivity extends BaseActivity {
 
     private String sid;
+    private int fid;
     private String sprice;
     private ScreenDetailBean screenDetailBean;
     private ImageView iv_pic;
@@ -76,8 +77,10 @@ public class DeviceDetailActivity extends BaseActivity {
 //			mResultImage.setLayoutParams(lps);
             String result = extras.getString("sid");
             sid = result;
+            fid = extras.getInt("fid",-1);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("sid", sid);
+            jsonObject.put("fid", fid);
             HttpUtil.doJsonPost(handler, URL.BASE_URL + "api/Lists/screen", jsonObject.toJSONString());
         }
     }
@@ -131,6 +134,9 @@ public class DeviceDetailActivity extends BaseActivity {
                 Intent intent = new Intent(this,FileChooseActivity.class);
                 intent.putExtra("sid",sid);
                 intent.putExtra("sprice",sprice);
+                if(fid != -1){
+                    intent.putExtra("fid",fid);
+                }
                 startActivity(intent);
                 break;
         }

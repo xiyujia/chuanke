@@ -78,6 +78,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
             public void onClick(View view) {
                 Intent intent = new Intent(activity, DeviceDetailActivity.class);
                 intent.putExtra("sid",screenDetailBean.getSid());
+                if(fid != -1){
+                    intent.putExtra("fid",fid);
+                }
                 view.getContext().startActivity(intent);
             }
         });
